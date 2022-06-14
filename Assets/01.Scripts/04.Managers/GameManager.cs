@@ -6,6 +6,8 @@ public class GameManager : MonoSingleton<GameManager>
 {
     private bool _isCursorHide = false;
 
+    public float TimeScale{ get; set; }
+
     private void Start()
     {
         SetCursorLock(true);

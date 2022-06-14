@@ -165,6 +165,7 @@ public class NewPlayerMove : MonoBehaviour
         labelStyle.fontSize = 50;
         labelStyle.normal.textColor = Color.red;
         GUILayout.Label($"플레이어 상태 : {PlayerState.ToString()}", labelStyle);
+        GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
 
 
     }

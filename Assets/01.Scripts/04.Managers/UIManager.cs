@@ -38,8 +38,6 @@ public class UIManager : MonoSingleton<UIManager>
         cam = GameObject.Find("UICam").GetComponent<Camera>();
         // var cameraData = Camera.main.GetUniversalAdditionalCameraData();
         // cameraData.cameraStack.Add(cam);
-
-
         SceneManager.UnloadSceneAsync(UISCENE);
     }
 
