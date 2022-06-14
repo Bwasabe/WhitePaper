@@ -40,7 +40,6 @@ public class ShowOrHideBtn : MonoBehaviour
     {
         _button = GetComponent<Button>();
 
-        Debug.Log((BUTTONTYPE)0);
         switch (_buttonType)
         {
             case BUTTONTYPE.SHOW:

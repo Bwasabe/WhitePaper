@@ -9,6 +9,6 @@ public class Inventory : MonoBehaviour
     private Dictionary<int, BaseItem> _inventoryDictionary = new Dictionary<int, BaseItem>();
 
     public void AddItem(){
-        
+
     }
 }
