@@ -99,7 +99,8 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            _playerVelocity.y += Physics.gravity.y * Time.deltaTime * _gravityScale;
+            if(!PlayerState.HasFlag(PLAYERSTATE.DASH) || !PlayerState.HasFlag(PLAYERSTATE.READYTOSMASH))
+                _playerVelocity.y += Physics.gravity.y * Time.deltaTime * _gravityScale;
         }
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
         {

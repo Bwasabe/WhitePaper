@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5d133deeaa66ed445853e946ff25e073, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.50157547, g: 0.27016097, b: 0.21001157, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -536,7 +536,7 @@ Transform:
   m_Children:
   - {fileID: 1323682943}
   m_Father: {fileID: 1195488190}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &152581933
 PrefabInstance:
@@ -1081,7 +1081,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1195488190}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &250442523
 MonoBehaviour:
@@ -1096,6 +1096,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sencetive: 3
+  _player: {fileID: 1195488190}
 --- !u!81 &250442524
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2604,7 +2605,7 @@ Transform:
   - {fileID: 601434498}
   - {fileID: 1556746572}
   m_Father: {fileID: 1195488190}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &499951879
 PrefabInstance:
@@ -4933,7 +4934,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1195488190}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &990704472
 PrefabInstance:
@@ -5764,8 +5765,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1182597790}
+  - component: {fileID: 1182597791}
   m_Layer: 7
-  m_Name: WeaponPos
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5783,8 +5785,26 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1195488190}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1182597791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182597789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492446ce76b0a254e99d5e9fc1ee1bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillType: 1
+  _light: {fileID: 507726433}
+  _attackSkybox: {fileID: 2100000, guid: 47b7a45414f3b564e9e8349bfa18b29f, type: 2}
+  _attackDistance: 15
+  _dashTime: 0.2
+  _playerMove: {fileID: 1195488191}
 --- !u!1 &1195488185
 GameObject:
   m_ObjectHideFlags: 0
@@ -5796,7 +5816,7 @@ GameObject:
   - component: {fileID: 1195488190}
   - component: {fileID: 1195488189}
   - component: {fileID: 1195488188}
-  - component: {fileID: 1195488187}
+  - component: {fileID: 1195488191}
   - component: {fileID: 1195488186}
   m_Layer: 7
   m_Name: Player
@@ -5814,36 +5834,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1195488185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd36798f1cd528649963a26c987e5480, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ae6ff200ed231d4cbf738b3287b2ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  _bullet: {fileID: 1854868414}
-  _shootPos: {fileID: 989715625}
-  _light: {fileID: 507726433}
-  _attackSkybox: {fileID: 2100000, guid: 47b7a45414f3b564e9e8349bfa18b29f, type: 2}
-  _attackEndBox: {fileID: 2100000, guid: 0657637449dfba34f84c2e4cf23683b6, type: 2}
---- !u!114 &1195488187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1195488185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43a0246e631bc514dbcdb0f04c893053, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 8
-  _jumpForce: 15
-  _dashSpeed: 20
-  _gravityScale: 3
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  _ultimateAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1182597791}
+        m_TargetAssemblyTypeName: MoonUltimate, Assembly-CSharp
+        m_MethodName: Skill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!143 &1195488188
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5892,15 +5900,34 @@ Transform:
   m_LocalPosition: {x: 241.2, y: 5.42, z: 274.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1182597790}
   - {fileID: 1281243850}
   - {fileID: 130946262}
   - {fileID: 477859888}
   - {fileID: 250442521}
   - {fileID: 989715625}
-  - {fileID: 1182597790}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1195488191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195488185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e82ea0e768a5c4b90bd26024a5ebaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 8
+  _jumpForce: 15
+  _dashSpeed: 20
+  _gravityScale: 3
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1221099104
 GameObject:
   m_ObjectHideFlags: 0
@@ -6515,7 +6542,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1195488190}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1281243851
 SkinnedMeshRenderer:

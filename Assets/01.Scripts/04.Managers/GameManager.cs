@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoSingleton<GameManager>
 {
 
-    public float TimeScale{ get; set; }
+    public float TimeScale { get; set; } = 1f;
 
 
 
