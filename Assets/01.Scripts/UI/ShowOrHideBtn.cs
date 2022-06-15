@@ -7,7 +7,7 @@ using DG.Tweening;
 [RequireComponent(typeof(Button))]
 public class ShowOrHideBtn : MonoBehaviour
 {
-    protected enum BUTTONTYPE
+    enum BUTTONTYPE
     {
         NONE,
         SHOW,
@@ -18,7 +18,7 @@ public class ShowOrHideBtn : MonoBehaviour
     private List<GameObject> _activeObjs = new List<GameObject>();
 
     [SerializeField]
-    protected BUTTONTYPE _buttonType = BUTTONTYPE.NONE;
+    private BUTTONTYPE _buttonType = BUTTONTYPE.NONE;
 
     [SerializeField]
     private CanvasGroup _uiCanvasGroup;
@@ -54,9 +54,8 @@ public class ShowOrHideBtn : MonoBehaviour
         }
     }
 
-    protected virtual void OnClickShow()
+    public void OnClickShow()
     {
-        GameManager.Instance.TimeScale = 0f;
         _interectBtns.ForEach(x => x.interactable = true);
         _button.interactable = false;
 
@@ -76,10 +75,8 @@ public class ShowOrHideBtn : MonoBehaviour
         );
     }
 
-    protected virtual void OnClickHide()
+    public void OnClickHide()
     {
-        GameManager.Instance.TimeScale = 1f;
-
         _interectBtns.ForEach(x => x.interactable = true);
         _button.interactable = false;
 
