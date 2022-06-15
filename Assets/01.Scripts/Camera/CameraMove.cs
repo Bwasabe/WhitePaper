@@ -7,6 +7,9 @@ public class CameraMove : MonoBehaviour
     [SerializeField]
     private float _sencetive = 3f;
 
+    [SerializeField]
+    private Transform _player;
+
     private float _rotateX = 0f;
     private float _rotateY = 0f;
 
@@ -23,7 +26,7 @@ public class CameraMove : MonoBehaviour
 
         _rotateY = Mathf.Clamp(_rotateY, -89f, 89f);
 
-        transform.parent.rotation = Quaternion.Euler(0f, _rotateX, 0f);
+        _player.rotation = Quaternion.Euler(0f, _rotateX, 0f);
         transform.rotation = Quaternion.Euler(-_rotateY, _rotateX, 0f);
     }
 

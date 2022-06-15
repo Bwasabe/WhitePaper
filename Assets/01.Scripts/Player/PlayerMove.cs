@@ -42,13 +42,8 @@ public class PlayerMove : MonoBehaviour
     private Vector3 _playerVelocity;
     private Vector3 _dashDir;
 
-    private Animator _animator = null;
-
-    private PlayerAnimation _playerAnimation = null;
     private void Start()
     {
-        _playerAnimation = GetComponent<PlayerAnimation>();
-        _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
         _camTransform = Camera.main.transform;
 
@@ -75,7 +70,7 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 dir = (right * h + forward * v).normalized * _speed;
 
-        _currentHit = _characterController.Move(dir * Time.deltaTime);
+        _currentHit = _characterController.Move(dir * Time.deltaTime * GameManager.Instance.TimeScale);
         if (dir == Vector3.zero)
             PlayerState &= ~PLAYERSTATE.MOVE;
         else
@@ -101,7 +96,6 @@ public class PlayerMove : MonoBehaviour
         {
             _playerVelocity.y = 0f;
             PlayerState &= ~PLAYERSTATE.JUMP;
-            _playerAnimation._playerAnimationState = PlayerAnimation.PLAYERANIMATIONSTATE.IDLE;
         }
         else
         {
@@ -111,11 +105,8 @@ public class PlayerMove : MonoBehaviour
         {
             _playerVelocity.y += Mathf.Sqrt(_jumpForce * -2.0f * Physics.gravity.y);
             PlayerState |= PLAYERSTATE.JUMP;
-            _playerAnimation._playerAnimationState = PlayerAnimation.PLAYERANIMATIONSTATE.JUMP;
         }
-        _animator.SetBool("IsGround", IsGround());
-        _animator.SetFloat("VelocityY", _playerVelocity.y);
-        _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime);
+        _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime * GameManager.Instance.TimeScale);
     }
 
     private void ReadyDash()
@@ -123,11 +114,13 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             _dashDir = _camTransform.forward * _dashSpeed;
+            _playerVelocity.y = 0f;
+            
             PlayerState |= PLAYERSTATE.DASH;
             StartCoroutine(Dash());
         }
 
-        _characterController.Move(_dashDir * Time.deltaTime);
+        _characterController.Move(_dashDir * Time.deltaTime * GameManager.Instance.TimeScale);
     }
 
 

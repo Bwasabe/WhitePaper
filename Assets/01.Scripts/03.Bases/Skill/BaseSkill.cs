@@ -9,7 +9,10 @@ public enum SKILLTYPE{
     LENGTH,
 }
 
-public class BaseSkill : MonoBehaviour
+public abstract class BaseSkill : MonoBehaviour
 {
-    
+    [SerializeField]
+    protected SKILLTYPE _skillType = SKILLTYPE.NONE;
+
+    public abstract void Skill();
 }
