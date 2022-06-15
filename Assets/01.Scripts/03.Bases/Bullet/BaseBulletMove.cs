@@ -17,6 +17,6 @@ public class BaseBulletMove : MonoBehaviour
     }
 
     private void Move(){
-        _transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+        _transform.Translate(Vector3.forward * _speed * Time.deltaTime * GameManager.Instance.TimeScale);
     }
 }
