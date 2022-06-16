@@ -42,13 +42,11 @@ public class KeyInterectionManager : MonoBehaviour
     {
         if (value == true)
         {
-            Debug.Log("마우스 잠김");
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
         {
-            Debug.Log("마우스 풀림");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }

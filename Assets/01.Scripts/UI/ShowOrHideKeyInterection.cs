@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ShowOrHideKeyInterection : ShowOrHideBtn
 {
@@ -32,7 +33,6 @@ public class ShowOrHideKeyInterection : ShowOrHideBtn
     {
         if (_isShow)
         {
-            Debug.Log("눌림");
             _isShow = false;
             base.OnClickHide();
         }

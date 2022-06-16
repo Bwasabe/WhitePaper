@@ -34,7 +34,9 @@ public class ShowOrHideBtn : MonoBehaviour
 
     private Button _button;
 
+    private static Tweener _hideTweener;
 
+    private static Tweener _showTweener;
 
     private void Start()
     {
@@ -56,6 +58,31 @@ public class ShowOrHideBtn : MonoBehaviour
 
     protected virtual void OnClickShow()
     {
+        if (_hideTweener.IsActive())
+        {
+            _hideTweener.Kill();
+
+            SetHideValue();
+
+            _activeObjs.ForEach(obj =>
+            {
+                    if (obj.activeSelf)
+                    {
+                        obj.SetActive(false);
+                    }
+            });
+            _uiCanvasGroup.alpha = 0f;
+        }
+        SetShowValue();
+        _showTweener = DOTween.To(
+            () => _uiCanvasGroup.alpha,
+            value => _uiCanvasGroup.alpha = value,
+            1f, _showDuration
+        );
+    }
+
+    private void SetShowValue()
+    {
         _interectBtns.ForEach(x => x.interactable = true);
         _button.interactable = false;
 
@@ -68,34 +95,56 @@ public class ShowOrHideBtn : MonoBehaviour
                 obj.SetActive(true);
             }
         });
-        DOTween.To(
-            () => _uiCanvasGroup.alpha,
-            value => _uiCanvasGroup.alpha = value,
-            1f, _showDuration
-        );
     }
+
+    private void Update()
+    {
+        Debug.Log("Hide : " + _hideTweener.IsActive() + " / Show : " + _showTweener.IsActive());
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            _hideTweener.Kill();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            _showTweener.Kill();
+        }
+    }
+
 
     protected virtual void OnClickHide()
     {
-        _interectBtns.ForEach(x => x.interactable = true);
-        _button.interactable = false;
+        if(_showTweener.IsActive()){
+            _showTweener.Kill();
+            SetShowValue();
 
-        _uiCanvasGroup.interactable = false;
-        _uiCanvasGroup.blocksRaycasts = false;
+            _uiCanvasGroup.alpha = 1f;
+        }
 
-        DOTween.To(
+        SetHideValue();
+
+        _hideTweener = DOTween.To(
             () => _uiCanvasGroup.alpha,
             value => _uiCanvasGroup.alpha = value,
             0f, _hideDuration
         ).OnComplete(() =>
         {
             _activeObjs.ForEach(obj =>
-                {
+            {
                     if (obj.activeSelf)
                     {
                         obj.SetActive(false);
                     }
-                });
+            });
         });
     }
+
+    private void SetHideValue(){
+        _interectBtns.ForEach(x => x.interactable = true);
+        _button.interactable = false;
+
+        _uiCanvasGroup.interactable = false;
+        _uiCanvasGroup.blocksRaycasts = false;
+    }
+
 }
