@@ -52,7 +52,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        
+
         Move();
         Jump();
         ReadyDash();
@@ -99,7 +99,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            if(!PlayerState.HasFlag(PLAYERSTATE.DASH) || !PlayerState.HasFlag(PLAYERSTATE.READYTOSMASH))
+            if (!PlayerState.HasFlag(PLAYERSTATE.DASH) || !PlayerState.HasFlag(PLAYERSTATE.READYTOSMASH))
                 _playerVelocity.y += Physics.gravity.y * Time.deltaTime * _gravityScale;
         }
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
@@ -110,13 +110,18 @@ public class PlayerMove : MonoBehaviour
         _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime * GameManager.Instance.TimeScale);
     }
 
+    public void RemoveGravity()
+    {
+        _playerVelocity.y = 0f;
+    }
+
     private void ReadyDash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             _dashDir = _camTransform.forward * _dashSpeed;
             _playerVelocity.y = 0f;
-            
+
             PlayerState |= PLAYERSTATE.DASH;
             StartCoroutine(Dash());
         }

@@ -14,5 +14,8 @@ public abstract class BaseSkill : MonoBehaviour
     [SerializeField]
     protected SKILLTYPE _skillType = SKILLTYPE.NONE;
 
+    [SerializeField]
+    protected ExecuteSkill _executeSkill;
+    
     public abstract void Skill();
 }

@@ -31,6 +31,9 @@ public class MoonUltimate : BaseSkill
 
     private Tweener _readyToUltimateTween;
 
+    private void Awake() {
+        _executeSkill.RegisterAction(Skill);
+    }
 
     private void Start()
     {
@@ -53,7 +56,7 @@ public class MoonUltimate : BaseSkill
             });
             return;
         }
-
+        _playerMove.RemoveGravity();
         StartCoroutine(DashAttack());
     }
 
