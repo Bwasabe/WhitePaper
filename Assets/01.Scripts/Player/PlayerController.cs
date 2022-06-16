@@ -42,16 +42,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Attack();
         AttackLong();
     }
-
-    private void Attack()
-    {
-        
-
-    }
-
 
 
     private IEnumerator ReturnToFalse()

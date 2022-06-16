@@ -56,8 +56,6 @@ public class ShowOrHideBtn : MonoBehaviour
 
     protected virtual void OnClickShow()
     {
-        GameManager.Instance.TimeScale = 0f;
-
         _interectBtns.ForEach(x => x.interactable = true);
         _button.interactable = false;
 
@@ -79,8 +77,6 @@ public class ShowOrHideBtn : MonoBehaviour
 
     protected virtual void OnClickHide()
     {
-        GameManager.Instance.TimeScale = 1f;
-
         _interectBtns.ForEach(x => x.interactable = true);
         _button.interactable = false;
 

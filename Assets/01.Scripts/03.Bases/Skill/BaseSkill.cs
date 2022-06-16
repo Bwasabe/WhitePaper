@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SKILLTYPE{
+public enum SKILLTYPE
+{
     NONE,
     MOON,
     FIRE,
@@ -16,6 +17,13 @@ public abstract class BaseSkill : MonoBehaviour
 
     [SerializeField]
     protected ExecuteSkill _executeSkill;
-    
+
+
+    protected virtual void Awake()
+    {
+        _executeSkill.RegisterAction(Skill);
+    }
+
+
     public abstract void Skill();
 }

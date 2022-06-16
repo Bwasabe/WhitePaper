@@ -1,7 +1,8 @@
+using static Yields;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class PlayerMove : MonoBehaviour
         DASH = 1 << 0,//1
         JUMP = 1 << 1,//2
         MOVE = 1 << 2,//4
-        READYTOSMASH = 1 << 3,//8
-        SMASH = 1 << 4,//16
     }
 
     public PLAYERSTATE PlayerState { get; set; }
@@ -41,6 +40,8 @@ public class PlayerMove : MonoBehaviour
 
     private Vector3 _playerVelocity;
     private Vector3 _dashDir;
+
+    public bool IsNotGravity { get; set; } = false;
 
     private void Start()
     {
@@ -70,7 +71,7 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 dir = (right * h + forward * v).normalized * _speed;
 
-        _currentHit = _characterController.Move(dir * Time.deltaTime * GameManager.Instance.TimeScale);
+        _currentHit = _characterController.Move(dir * Time.deltaTime * GameManager.TimeScale);
         if (dir == Vector3.zero)
             PlayerState &= ~PLAYERSTATE.MOVE;
         else
@@ -99,15 +100,15 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            if (!PlayerState.HasFlag(PLAYERSTATE.DASH) || !PlayerState.HasFlag(PLAYERSTATE.READYTOSMASH))
-                _playerVelocity.y += Physics.gravity.y * Time.deltaTime * _gravityScale;
+            if (!IsNotGravity)
+                _playerVelocity.y += Physics.gravity.y * Time.deltaTime * _gravityScale * GameManager.TimeScale;
         }
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
         {
             _playerVelocity.y += Mathf.Sqrt(_jumpForce * -2.0f * Physics.gravity.y);
             PlayerState |= PLAYERSTATE.JUMP;
         }
-        _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime * GameManager.Instance.TimeScale);
+        _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime * GameManager.TimeScale);
     }
 
     public void RemoveGravity()
@@ -126,13 +127,13 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        _characterController.Move(_dashDir * Time.deltaTime * GameManager.Instance.TimeScale);
+        _characterController.Move(_dashDir * Time.deltaTime * GameManager.TimeScale);
     }
 
 
     private IEnumerator Dash()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return WaitForSeconds(0.5f);
         PlayerState &= ~PLAYERSTATE.DASH;
         _dashDir = Vector3.zero;
     }

@@ -19,7 +19,6 @@ public class Meteor : BaseBulletMove
     [SerializeField]
     private GameObject _particle = null;
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("잉");
         Debug.Log(other);
         Collider[] cols = Physics.OverlapSphere(transform.position, _radius, _hitLayer);
 
@@ -32,7 +31,4 @@ public class Meteor : BaseBulletMove
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision other) {
-        Debug.Log(other);
-    }
 }

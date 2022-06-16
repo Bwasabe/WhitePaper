@@ -11,8 +11,8 @@ public class ExecuteSkill : MonoBehaviour
         Ultimate();
     }
 
-    public void ClearAction(Action action){
-        action = () => { };
+    public void ClearAction(){
+        _ultimateAction = () => { };
     }
 
     public void RegisterAction(Action action){

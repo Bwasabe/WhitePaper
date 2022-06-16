@@ -27,13 +27,10 @@ public class MoonUltimate : BaseSkill
 
     private Transform _camTransform;
 
-    private Coroutine _distanceCoroutine = null;
 
     private Tweener _readyToUltimateTween;
 
-    private void Awake() {
-        _executeSkill.RegisterAction(Skill);
-    }
+    private bool _isSkill = false;
 
     private void Start()
     {
@@ -46,13 +43,14 @@ public class MoonUltimate : BaseSkill
     public override void Skill()
     {
         //if(_readyToUltimateTween != null && _readyToUltimateTween.IsPlaying())return;
-        if (!_playerMove.PlayerState.HasFlag(PlayerMove.PLAYERSTATE.READYTOSMASH))
+        if (!_isSkill)
         {
             _readyToUltimateTween = _light.DOIntensity(0f, 1f).OnComplete(() =>
             {
                 RenderSettings.skybox = _attackSkybox;
 
-                _playerMove.PlayerState |= PlayerMove.PLAYERSTATE.READYTOSMASH;
+                _isSkill = true;
+                _playerMove.IsNotGravity = true;
             });
             return;
         }
@@ -66,9 +64,9 @@ public class MoonUltimate : BaseSkill
         while (timer <= 0.25f)
         {
             timer += Time.deltaTime;
-            _characterController.Move(_camTransform.forward * _attackDistance * Time.deltaTime * _dashTime);
+            _characterController.Move(_camTransform.forward * _attackDistance * Time.deltaTime * _dashTime * GameManager.TimeScale);
             yield return null;
-
         }
+        _playerMove.IsNotGravity = false;
     }
 }
