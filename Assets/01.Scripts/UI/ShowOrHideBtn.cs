@@ -97,20 +97,6 @@ public class ShowOrHideBtn : MonoBehaviour
         });
     }
 
-    private void Update()
-    {
-        Debug.Log("Hide : " + _hideTweener.IsActive() + " / Show : " + _showTweener.IsActive());
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            _hideTweener.Kill();
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            _showTweener.Kill();
-        }
-    }
-
 
     protected virtual void OnClickHide()
     {
