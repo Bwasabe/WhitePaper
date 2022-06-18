@@ -30,6 +30,13 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private LayerMask _groundLayer;
 
+    [SerializeField]
+    private Transform _itemTransform;
+
+    public Transform ItemTransform => _itemTransform;
+
+    public ExecuteSkill _skill { get; set; }
+
 
     private Transform _camTransform = null;
 
@@ -43,8 +50,18 @@ public class PlayerMove : MonoBehaviour
 
     public bool IsNotGravity { get; set; } = false;
 
+    private Animator _animator;
+
+    private int VELOCITYHHASH = Animator.StringToHash("VelocityH");
+    //private int VELOCITYVHASH = Animator.StringToHash("VelocityV");
+
+    private int JUMPHASH = Animator.StringToHash("Jump");
+    private int RETURNTOSTATEHASH = Animator.StringToHash("ReturnToState");
+
     private void Start()
     {
+        _skill = GetComponent<ExecuteSkill>();
+        _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
         _camTransform = Camera.main.transform;
 
@@ -58,6 +75,7 @@ public class PlayerMove : MonoBehaviour
         Jump();
         ReadyDash();
     }
+
 
     private void Move()
     {
@@ -76,7 +94,10 @@ public class PlayerMove : MonoBehaviour
             PlayerState &= ~PLAYERSTATE.MOVE;
         else
             PlayerState |= PLAYERSTATE.MOVE;
+
+        _animator.SetFloat(VELOCITYHHASH, dir.x + dir.z);
     }
+
 
     private bool IsGround()
     {
@@ -107,7 +128,11 @@ public class PlayerMove : MonoBehaviour
         {
             _playerVelocity.y += Mathf.Sqrt(_jumpForce * -2.0f * Physics.gravity.y);
             PlayerState |= PLAYERSTATE.JUMP;
+            _animator.SetTrigger(JUMPHASH);
         }
+
+        
+
         _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime * GameManager.TimeScale);
     }
 

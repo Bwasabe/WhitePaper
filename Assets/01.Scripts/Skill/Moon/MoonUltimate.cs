@@ -39,6 +39,7 @@ public class MoonUltimate : BaseSkill
 
         //계산을 위해 역수로 변환
         _dashTime = 1 / _dashTime;
+
     }
     public override void Skill()
     {

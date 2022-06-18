@@ -13,45 +13,101 @@ public class Inventory : MonoSingleton<Inventory>
     private GameObject _grid = null;
 
     [SerializeField]
+    private InventoryGrid _weaponGrid;
+
+    [SerializeField]
     private GameObject _itemExplainPanel;
 
     public GameObject ItemExplainPanel => _itemExplainPanel;
 
-    [SerializeField]
-    private BaseItem _test;
-    [SerializeField]
-    private BaseItem _test2;
 
     private int _currentLength = 0;
     private int _inventorySize = 20;
 
+    public int CurrentSelect { get; set; }
 
     private void Start()
     {
         for (int i = 0; i < _inventorySize; ++i)
         {
-            AddGrid();
+            AddGrid(i);
         }
 
-        AddItem(_test);
-        AddItem(_test2);
+        // AddItem(_teset);
+        // AddItem(_tese1t);
+        // AddItem(_tese1t2);
     }
+
+    private void Update() {
+        Debug.Log(CurrentSelect);
+    }
+
     public void AddItem(BaseItem item)
     {
-        item.transform.SetParent(_grids[_currentLength].transform);
-        item.transform.localPosition = Vector3.zero;
-        item.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
-        item.transform.localScale = item.InventoryScale;
-        item.gameObject.layer = LayerMask.NameToLayer("UI");
+        SetItem(item, _grids[_currentLength].transform);
+
         _grids[_currentLength].SetItem(item.name);
         ++_currentLength;
     }
 
-    public void AddGrid()
+    private void SetWeapon(BaseItem item)
+    {
+        SetItem(item, _weaponGrid.transform);
+
+        _weaponGrid.SetItem(item.name);
+
+        for (int i = CurrentSelect + 1; i < _currentLength; ++i)
+        {
+            SetItem(_grids[i].Item, _grids[i - 1].transform);
+            _grids[i - 1].SetItem(_grids[i].Item.name);
+        }
+        _currentLength--;
+    }
+
+    public void SetItem(BaseItem item, Transform parent)
+    {
+        item.transform.SetParent(parent);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
+        item.transform.localScale = item.InventoryScale;
+        item.gameObject.layer = LayerMask.NameToLayer("UI");
+    }
+
+
+    public void AddGrid(int id)
     {
         GameObject g = Instantiate(_grid, transform);
         g.SetActive(true);
-
-        _grids.Add(g.GetComponent<InventoryGrid>());
+        InventoryGrid grid = g.GetComponent<InventoryGrid>();
+        grid.ID = id;
+        _grids.Add(grid);
     }
+
+
+    public void OnClickEquipItem()
+    {
+        if(CurrentSelect == -1)return;
+
+        //TODO: 장착시 연출
+        if (_weaponGrid.Item == null)
+        {
+            SetWeapon(_grids[CurrentSelect].Item);
+            _grids[CurrentSelect].SetItem("null");
+        }
+        else
+        {
+            //TODO:스왑
+
+            SetItem(_weaponGrid.Item, _grids[CurrentSelect].transform);
+            SetItem(_grids[CurrentSelect].Item, _weaponGrid.transform);
+
+            string temp = _grids[CurrentSelect].Item.name;
+            _grids[CurrentSelect].SetItem(_weaponGrid.Item.name);
+
+            _weaponGrid.SetItem(temp);
+        }
+        CurrentSelect = -1;
+
+    }
+
 }

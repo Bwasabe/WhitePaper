@@ -7,14 +7,16 @@ using TMPro;
 
 public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    private int _id = 0;
+    public int ID { get; set; } = 0;
 
+    
     private RectTransform _rect;
 
     private Outline _outline;
 
     private BaseItem _item;
 
+    public BaseItem Item => _item;
 
     private const string OUTLINE = "GridOutline";
     private const string NAMETEXT = "NameText";
@@ -22,7 +24,7 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private const string SKILLNAMETEXT = "SkillNameText";
     private const string SKILLEXPLAINTEXT = "SkillExplainText";
 
-    private GameObject _panel;
+    protected GameObject _panel;
     private RectTransform _panelRect;
 
     private TMP_Text _nameText;
@@ -49,8 +51,13 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void SetItem(string name)
     {
-        _item = transform.Find(name).GetComponent<BaseItem>();
-        
+        if(name == "null"){
+            _item = null;
+        }
+        else{   
+            _item = transform.Find(name).GetComponent<BaseItem>();
+        }
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -82,11 +89,19 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         //_panel.SetActive(false);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
-        //TODO: 무기 설명 띄어주기
-        SetValue();
-        _panel.SetActive(true);
+        if (_item)
+        {
+            SetValue();
+            _panel.SetActive(true);
+        }
+        else
+        {
+            _panel.SetActive(false);
+
+        }
+        Inventory.Instance.CurrentSelect = ID;
         //TODO: 아이템 위치와 id에 따라 설명 위치 바꿔주기 
 
     }

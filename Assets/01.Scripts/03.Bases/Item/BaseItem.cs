@@ -35,10 +35,10 @@ public class BaseItem : MonoBehaviour
     [SerializeField]
     private Vector3 _inventoryScale;
 
-    [SerializeField]
-    private bool _isDroped;
-
     public Vector3 InventoryScale => _inventoryScale;
+
+
+    public bool IsDroped { get; set; } = false;
 
 }
 

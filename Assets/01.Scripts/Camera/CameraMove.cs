@@ -24,8 +24,9 @@ public class CameraMove : MonoBehaviour
         _rotateX += x * _sencetive;
         _rotateY += y * _sencetive;
 
-        _rotateY = Mathf.Clamp(_rotateY, -89f, 89f);
-
+        _rotateY = Mathf.Clamp(_rotateY, -50f, 89f);
+        //_rotateX = Mathf.Clamp(_rotateX, -52f, 52f);
+        //TODO: 나중에는 얼굴만 돌리다가 90도?단위 정도로 돌아갔을때만 몸 돌리는거로 바꿀 것
         _player.rotation = Quaternion.Euler(0f, _rotateX, 0f);
         transform.rotation = Quaternion.Euler(-_rotateY, _rotateX, 0f);
     }

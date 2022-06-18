@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using UnityEngine.Rendering.Universal;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -36,8 +35,6 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         cam = GameObject.Find("UICam").GetComponent<Camera>();
-        // var cameraData = Camera.main.GetUniversalAdditionalCameraData();
-        // cameraData.cameraStack.Add(cam);
         SceneManager.UnloadSceneAsync(UISCENE);
     }
 
