@@ -31,9 +31,18 @@ public class PlayerGetItem : MonoBehaviour
         if(Physics.Raycast(ray,out raycastHit, _itemRange   , _itemLayer)){
             if(Input.GetKeyDown(KeyCode.F)){
                 Debug.Log("아이템 획득");
-                BaseItem item = Instantiate(raycastHit.transform.GetComponent<BaseItem>());
-                Inventory.Instance.AddItem(item);
-                raycastHit.transform.gameObject.SetActive(false);
+                GameObject item = Instantiate(raycastHit.transform.gameObject);
+                Inventory.Instance.AddItem(item.GetComponent<BaseItem>());
+
+                Transform hitTransform = raycastHit.transform;
+
+                hitTransform.SetParent(GameManager.Instance.Player.ItemTransform);
+
+                hitTransform.localPosition = Vector3.zero;
+                hitTransform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                hitTransform.name = item.name;
+
+                hitTransform.gameObject.SetActive(false);
             }
             else{
                 Debug.Log("F를 눌러 아이템 획득 가능");

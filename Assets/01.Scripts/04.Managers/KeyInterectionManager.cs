@@ -28,12 +28,13 @@ public class KeyInterectionManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ParamEventManager.TriggerEvent(KeyCode.Escape.ToString(), _cursorParam);
+            //ParamEventManager.TriggerEvent(KeyCode.Escape.ToString(), _cursorParam);
 
             EventManager.TriggerEvent(KeyCode.Escape.ToString());
         }
 
         if(Input.GetKeyDown(KeyCode.E)){
+            ParamEventManager.TriggerEvent(KeyCode.Escape.ToString(), _cursorParam);
             EventManager.TriggerEvent(KeyCode.E.ToString());
         }
     }

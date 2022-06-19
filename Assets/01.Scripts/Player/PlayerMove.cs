@@ -101,15 +101,24 @@ public class PlayerMove : MonoBehaviour
 
     private bool IsGround()
     {
-        Vector3 pos1 = transform.position;
-        float value = _characterController.height * 0.5f - _characterController.radius + 0.1f;
+        Vector3 pos1 = transform.position + _characterController.center;
+        float value = _characterController.height * 0.5f;
         pos1.y += value;
-        Vector3 pos2 = transform.position;
+        Vector3 pos2 = transform.position + _characterController.center;
         pos2.y -= value;
-
+        
 
         return Physics.CheckCapsule(pos1, pos2, _characterController.radius, _groundLayer);
     }
+
+    // private void OnGUI() {
+    //     var labelStyle = new GUIStyle();
+    //     labelStyle.fontSize = 50;
+    //     labelStyle.normal.textColor = Color.red;
+
+    //     GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
+    //     GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
+    // }
 
 
     private void Jump()
@@ -145,6 +154,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            IsNotGravity = true;
             _dashDir = _camTransform.forward * _dashSpeed;
             _playerVelocity.y = 0f;
 
@@ -159,6 +169,7 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator Dash()
     {
         yield return WaitForSeconds(0.5f);
+        IsNotGravity = false;
         PlayerState &= ~PLAYERSTATE.DASH;
         _dashDir = Vector3.zero;
     }

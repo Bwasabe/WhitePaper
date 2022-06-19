@@ -32,7 +32,6 @@ public class FireUltimate : BaseSkill
     private void Start()
     {
         _camTransform = MainCam.transform;
-
     }
 
     public override void Skill()
@@ -46,7 +45,7 @@ public class FireUltimate : BaseSkill
         g.transform.SetParent(null);
         g.gameObject.SetActive(true);
 
-        StartCoroutine(ExecuteParticle(g));
+        this.StartCoroutine(ExecuteParticle(g));
 
     }
     private IEnumerator ExecuteParticle(ParticleSystemRenderer g)

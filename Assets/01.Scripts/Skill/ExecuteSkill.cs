@@ -17,6 +17,7 @@ public class ExecuteSkill : MonoBehaviour
 
     public void RegisterAction(Action action){
         _ultimateAction += action;
+        Debug.Log("잉");
     }
 
     private void Ultimate(){

@@ -20,7 +20,6 @@ public class MoonUltimate : BaseSkill
     [SerializeField]
     private float _dashTime = 0.25f;
 
-    [SerializeField]
     private PlayerMove _playerMove;
 
     private CharacterController _characterController;
@@ -35,6 +34,7 @@ public class MoonUltimate : BaseSkill
     private void Start()
     {
         _camTransform = MainCam.transform;
+        _playerMove = GameManager.Instance.Player;
         _characterController = _playerMove.transform.GetComponent<CharacterController>();
 
         //계산을 위해 역수로 변환
@@ -44,6 +44,7 @@ public class MoonUltimate : BaseSkill
     public override void Skill()
     {
         //if(_readyToUltimateTween != null && _readyToUltimateTween.IsPlaying())return;
+        Debug.Log("잉ㅁㄴㅇ");
         if (!_isSkill)
         {
             _readyToUltimateTween = _light.DOIntensity(0f, 1f).OnComplete(() =>

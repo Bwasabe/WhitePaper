@@ -20,6 +20,9 @@ public class Inventory : MonoSingleton<Inventory>
 
     public GameObject ItemExplainPanel => _itemExplainPanel;
 
+    private Transform _playerHand = null;
+
+    private ExecuteSkill _executeSkill;
 
     private int _currentLength = 0;
     private int _inventorySize = 20;
@@ -36,9 +39,12 @@ public class Inventory : MonoSingleton<Inventory>
         // AddItem(_teset);
         // AddItem(_tese1t);
         // AddItem(_tese1t2);
+        _executeSkill = GameManager.Instance.Player.GetComponent<ExecuteSkill>();
+        _playerHand = GameManager.Instance.Player.ItemTransform;
     }
 
-    private void Update() {
+    private void Update()
+    {
         Debug.Log(CurrentSelect);
     }
 
@@ -86,21 +92,35 @@ public class Inventory : MonoSingleton<Inventory>
 
     public void OnClickEquipItem()
     {
-        if(CurrentSelect == -1)return;
+        if (CurrentSelect == -1) return;
 
         //TODO: 장착시 연출
         if (_weaponGrid.Item == null)
         {
             SetWeapon(_grids[CurrentSelect].Item);
             _grids[CurrentSelect].SetItem("null");
+
+            _executeSkill.ClearAction();
+            _executeSkill.RegisterAction(_weaponGrid.Item.GetComponent<BaseSkill>().Skill);
+            Debug.Log(_weaponGrid.Item.name);
+            _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(true);
         }
         else
         {
             //TODO:스왑
+            // 무기 변경
+            _playerHand.Find(_grids[CurrentSelect].Item.name).gameObject.SetActive(true);
+            _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(false);
 
+            // 스킬 초기화 및 등록
+            _executeSkill.ClearAction();
+            _executeSkill.RegisterAction(_grids[CurrentSelect].Item.GetComponent<BaseSkill>().Skill);
+
+            // UI 아이템 스왑
             SetItem(_weaponGrid.Item, _grids[CurrentSelect].transform);
             SetItem(_grids[CurrentSelect].Item, _weaponGrid.transform);
 
+            //각각의 그리드 마다 아이템 이름 설정
             string temp = _grids[CurrentSelect].Item.name;
             _grids[CurrentSelect].SetItem(_weaponGrid.Item.name);
 

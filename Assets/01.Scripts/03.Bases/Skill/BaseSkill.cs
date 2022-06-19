@@ -19,11 +19,6 @@ public abstract class BaseSkill : MonoBehaviour
     protected ExecuteSkill _executeSkill;
 
 
-    protected virtual void Awake()
-    {
-        _executeSkill.RegisterAction(Skill);
-    }
-
 
     public abstract void Skill();
 }
