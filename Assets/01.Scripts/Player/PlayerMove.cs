@@ -35,7 +35,7 @@ public class PlayerMove : MonoBehaviour
 
     public Transform ItemTransform => _itemTransform;
 
-    public ExecuteSkill _skill { get; set; }
+    public ExecuteSkill Skill { get; set; }
 
 
     private Transform _camTransform = null;
@@ -60,13 +60,12 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        _skill = GetComponent<ExecuteSkill>();
+        Skill = GetComponent<ExecuteSkill>();
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
         _camTransform = Camera.main.transform;
 
     }
-
 
     private void Update()
     {
@@ -75,7 +74,6 @@ public class PlayerMove : MonoBehaviour
         Jump();
         ReadyDash();
     }
-
 
     private void Move()
     {
@@ -164,7 +162,6 @@ public class PlayerMove : MonoBehaviour
 
         _characterController.Move(_dashDir * Time.deltaTime * GameManager.TimeScale);
     }
-
 
     private IEnumerator Dash()
     {

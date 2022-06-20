@@ -99,7 +99,6 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         else
         {
             _panel.SetActive(false);
-
         }
         Inventory.Instance.CurrentSelect = ID;
         //TODO: 아이템 위치와 id에 따라 설명 위치 바꿔주기 

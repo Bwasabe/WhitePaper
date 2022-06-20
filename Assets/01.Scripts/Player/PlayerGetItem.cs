@@ -13,10 +13,12 @@ public class PlayerGetItem : MonoBehaviour
     private LayerMask _itemLayer;
 
     private Transform _camTransform = null;
+
+    private PlayerMove _player = null;
     private void Start() {
         _camTransform = MainCam.transform;
 
-        Debug.Log("인벤토리를 켯다 꺼주세요");
+        _player = GameManager.Instance.Player;
     }
     private void Update() {
         GetItem();
@@ -35,6 +37,9 @@ public class PlayerGetItem : MonoBehaviour
                 Inventory.Instance.AddItem(item.GetComponent<BaseItem>());
 
                 Transform hitTransform = raycastHit.transform;
+                _player.Skill.ClearAction();
+                _player.Skill.RegisterAction(hitTransform.GetComponent<BaseSkill>().Skill);
+
 
                 hitTransform.SetParent(GameManager.Instance.Player.ItemTransform);
 

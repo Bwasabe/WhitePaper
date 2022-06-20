@@ -27,10 +27,15 @@ public class Inventory : MonoSingleton<Inventory>
     private int _currentLength = 0;
     private int _inventorySize = 20;
 
+    public int InventorySize => _inventorySize;
+
     public int CurrentSelect { get; set; }
+
+    private PlayerMove _player = null;
 
     private void Start()
     {
+        _player = GameManager.Instance.Player;
         for (int i = 0; i < _inventorySize; ++i)
         {
             AddGrid(i);
@@ -39,8 +44,8 @@ public class Inventory : MonoSingleton<Inventory>
         // AddItem(_teset);
         // AddItem(_tese1t);
         // AddItem(_tese1t2);
-        _executeSkill = GameManager.Instance.Player.GetComponent<ExecuteSkill>();
-        _playerHand = GameManager.Instance.Player.ItemTransform;
+        _executeSkill = _player.GetComponent<ExecuteSkill>();
+        _playerHand = _player.ItemTransform;
     }
 
     private void Update()
@@ -62,12 +67,14 @@ public class Inventory : MonoSingleton<Inventory>
 
         _weaponGrid.SetItem(item.name);
 
-        for (int i = CurrentSelect + 1; i < _currentLength; ++i)
+        for (int i = CurrentSelect; i < _currentLength -1 ; ++i)
         {
-            SetItem(_grids[i].Item, _grids[i - 1].transform);
-            _grids[i - 1].SetItem(_grids[i].Item.name);
+            SetItem(_grids[i + 1].Item, _grids[i].transform);
+            _grids[i].SetItem(_grids[i + 1].Item.name);
         }
         _currentLength--;
+
+        _grids[_currentLength].SetItem("null");
     }
 
     public void SetItem(BaseItem item, Transform parent)
@@ -98,10 +105,10 @@ public class Inventory : MonoSingleton<Inventory>
         if (_weaponGrid.Item == null)
         {
             SetWeapon(_grids[CurrentSelect].Item);
-            _grids[CurrentSelect].SetItem("null");
 
             _executeSkill.ClearAction();
-            _executeSkill.RegisterAction(_weaponGrid.Item.GetComponent<BaseSkill>().Skill);
+            _executeSkill.RegisterAction(_playerHand.Find(_weaponGrid.Item.name).GetComponent<BaseSkill>().Skill);
+            //_executeSkill.RegisterAction(_weaponGrid.Item.GetComponent<BaseSkill>().Skill);
             Debug.Log(_weaponGrid.Item.name);
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(true);
         }
@@ -112,9 +119,9 @@ public class Inventory : MonoSingleton<Inventory>
             _playerHand.Find(_grids[CurrentSelect].Item.name).gameObject.SetActive(true);
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(false);
 
-            // 스킬 초기화 및 등록
+            // // 스킬 초기화 및 등록
             _executeSkill.ClearAction();
-            _executeSkill.RegisterAction(_grids[CurrentSelect].Item.GetComponent<BaseSkill>().Skill);
+            _executeSkill.RegisterAction(_playerHand.Find(_grids[CurrentSelect].Item.name).GetComponent<BaseSkill>().Skill);
 
             // UI 아이템 스왑
             SetItem(_weaponGrid.Item, _grids[CurrentSelect].transform);
