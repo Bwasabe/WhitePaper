@@ -30,12 +30,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private LayerMask _groundLayer;
 
-    [SerializeField]
-    private Transform _itemTransform;
 
-    public Transform ItemTransform => _itemTransform;
-
-    public ExecuteSkill Skill { get; set; }
 
 
     private Transform _camTransform = null;
@@ -60,7 +55,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        Skill = GetComponent<ExecuteSkill>();
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
         _camTransform = Camera.main.transform;

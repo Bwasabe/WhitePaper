@@ -14,11 +14,11 @@ public class PlayerGetItem : MonoBehaviour
 
     private Transform _camTransform = null;
 
-    private PlayerMove _player = null;
+    private PlayerController _playerCtrl = null;
     private void Start() {
         _camTransform = MainCam.transform;
 
-        _player = GameManager.Instance.Player;
+        _playerCtrl = GameManager.Instance.PlayerCtrl;
     }
     private void Update() {
         GetItem();
@@ -33,21 +33,28 @@ public class PlayerGetItem : MonoBehaviour
         if(Physics.Raycast(ray,out raycastHit, _itemRange   , _itemLayer)){
             if(Input.GetKeyDown(KeyCode.F)){
                 Debug.Log("아이템 획득");
-                GameObject item = Instantiate(raycastHit.transform.gameObject);
-                Inventory.Instance.AddItem(item.GetComponent<BaseItem>());
+                if(Inventory.Instance.CurrentLength >= Inventory.Instance.InventorySize){
+                    Debug.Log("인벤토리가 꽉참");
+                    return;
+                }
+                else
+                {
+                    GameObject item = Instantiate(raycastHit.transform.gameObject);
+                    Inventory.Instance.AddItem(item.GetComponent<BaseItem>());
 
-                Transform hitTransform = raycastHit.transform;
-                _player.Skill.ClearAction();
-                _player.Skill.RegisterAction(hitTransform.GetComponent<BaseSkill>().Skill);
+                    Transform hitTransform = raycastHit.transform;
+                    _playerCtrl.Skill.ClearAction();
+                    _playerCtrl.Skill.RegisterAction(hitTransform.GetComponent<BaseSkill>().Skill);
 
 
-                hitTransform.SetParent(GameManager.Instance.Player.ItemTransform);
+                    hitTransform.SetParent(GameManager.Instance.PlayerCtrl.ItemTransform);
 
-                hitTransform.localPosition = Vector3.zero;
-                hitTransform.localRotation = Quaternion.Euler(0f, 0f, 180f);
-                hitTransform.name = item.name;
+                    hitTransform.localPosition = Vector3.zero;
+                    hitTransform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                    hitTransform.name = item.name;
 
-                hitTransform.gameObject.SetActive(false);
+                    hitTransform.gameObject.SetActive(false);
+                }
             }
             else{
                 Debug.Log("F를 눌러 아이템 획득 가능");

@@ -15,7 +15,7 @@ public class KeyInterectionManager : MonoBehaviour
         _escapeAction = _cursorParam =>
         {
             SetCursorLock((bool)_cursorParam.objs[0]);
-            _cursorParam.objs[0] = !(bool)_cursorParam.objs[0];
+            //_cursorParam.objs[0] = !(bool)_cursorParam.objs[0];
         };
 
         ParamEventManager.StartListening(KeyCode.Escape.ToString(), _escapeAction);
@@ -28,13 +28,16 @@ public class KeyInterectionManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //ParamEventManager.TriggerEvent(KeyCode.Escape.ToString(), _cursorParam);
+            _cursorParam.objs[0] = true;
+            ParamEventManager.TriggerEvent(KeyCode.Escape.ToString(), _cursorParam);
 
             EventManager.TriggerEvent(KeyCode.Escape.ToString());
         }
 
         if(Input.GetKeyDown(KeyCode.E)){
+            _cursorParam.objs[0] = false;
             ParamEventManager.TriggerEvent(KeyCode.Escape.ToString(), _cursorParam);
+
             EventManager.TriggerEvent(KeyCode.E.ToString());
         }
     }

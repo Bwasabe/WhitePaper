@@ -34,7 +34,7 @@ public class MoonUltimate : BaseSkill
     private void Start()
     {
         _camTransform = MainCam.transform;
-        _playerMove = GameManager.Instance.Player;
+        _playerMove = GameManager.Instance.PlayerMove;
         _characterController = _playerMove.transform.GetComponent<CharacterController>();
 
         //계산을 위해 역수로 변환

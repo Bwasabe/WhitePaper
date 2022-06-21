@@ -7,18 +7,32 @@ public class GameManager : MonoSingleton<GameManager>
 
     public static float TimeScale { get; set; } = 1f;
 
-    public PlayerMove Player
+    public PlayerMove PlayerMove
     {
         get
         {
-            if (_player == null)
+            if (_playerMove == null)
             {
-                _player = FindObjectOfType<PlayerMove>();
+                _playerMove = FindObjectOfType<PlayerMove>();
             }
-            return _player;
+            return _playerMove;
         }
     }
 
-    private PlayerMove _player;
+    private PlayerMove _playerMove;
+
+    public PlayerController PlayerCtrl
+    {
+        get
+        {
+            if (_playerCtrl == null)
+            {
+                _playerCtrl = FindObjectOfType<PlayerController>();
+            }
+            return _playerCtrl;
+        }
+    }
+
+    private PlayerController _playerCtrl;
 
 }

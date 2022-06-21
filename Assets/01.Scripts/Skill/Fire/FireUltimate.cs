@@ -38,7 +38,7 @@ public class FireUltimate : BaseSkill
     {
         Vector3 pos = _camTransform.forward;
         pos.y += 1.5f;
-        
+
         ParticleSystemRenderer g = Instantiate(_magicCircleEffect, _player.transform);
         g.transform.rotation = Quaternion.identity;
         g.transform.localPosition = pos;
@@ -50,27 +50,30 @@ public class FireUltimate : BaseSkill
     }
     private IEnumerator ExecuteParticle(ParticleSystemRenderer g)
     {
-        DOTween.To(
-            () => g.minParticleSize,
-            value => {
-                g.maxParticleSize = value;
-                g.minParticleSize = value;
-            },
-            1f, _circleDuration
-        );
-
+        // DOTween.To(
+        //     () => g.minParticleSize,
+        //     value => {
+        //         g.maxParticleSize = value;
+        //         g.minParticleSize = value;
+        //     },
+        //     1f, _circleDuration
+        // );
+        // /g.alignment = ParticleSystemRenderSpace.World;
+        g.maxParticleSize = 1f;
+        g.minParticleSize = 1f;
         yield return WaitForSeconds(_circleDuration);
 
-        DOTween.To(
-            () => g.minParticleSize,
-            value => {
-                g.minParticleSize = value;
-                g.maxParticleSize = value;
-            },
-            0f, _circleDuration / 4
-        );
+        // DOTween.To(
+        //     () => g.minParticleSize,
+        //     value =>
+        //     {
+        //         g.minParticleSize = value;
+        //         g.maxParticleSize = value;
+        //     },
+        //     0f, _circleDuration / 4
+        // );
 
-        yield return WaitForSeconds(_circleDuration/4);
+        // yield return WaitForSeconds(_circleDuration / 4);
 
         ExecuteMeteor();
     }

@@ -24,19 +24,17 @@ public class Inventory : MonoSingleton<Inventory>
 
     private ExecuteSkill _executeSkill;
 
-    private int _currentLength = 0;
-    private int _inventorySize = 20;
-
-    public int InventorySize => _inventorySize;
+    public int CurrentLength { get; set; } = 0;
+    public int InventorySize{ get; set; } = 20;
 
     public int CurrentSelect { get; set; }
 
-    private PlayerMove _player = null;
+    private PlayerController _playerCtrl = null;
 
     private void Start()
     {
-        _player = GameManager.Instance.Player;
-        for (int i = 0; i < _inventorySize; ++i)
+        _playerCtrl = GameManager.Instance.PlayerCtrl;
+        for (int i = 0; i < InventorySize; ++i)
         {
             AddGrid(i);
         }
@@ -44,8 +42,8 @@ public class Inventory : MonoSingleton<Inventory>
         // AddItem(_teset);
         // AddItem(_tese1t);
         // AddItem(_tese1t2);
-        _executeSkill = _player.GetComponent<ExecuteSkill>();
-        _playerHand = _player.ItemTransform;
+        _executeSkill = _playerCtrl.Skill;
+        _playerHand = _playerCtrl.ItemTransform;
     }
 
     private void Update()
@@ -55,10 +53,10 @@ public class Inventory : MonoSingleton<Inventory>
 
     public void AddItem(BaseItem item)
     {
-        SetItem(item, _grids[_currentLength].transform);
+        SetItem(item, _grids[CurrentLength].transform);
 
-        _grids[_currentLength].SetItem(item.name);
-        ++_currentLength;
+        _grids[CurrentLength].SetItem(item.name);
+        ++CurrentLength;
     }
 
     private void SetWeapon(BaseItem item)
@@ -67,14 +65,14 @@ public class Inventory : MonoSingleton<Inventory>
 
         _weaponGrid.SetItem(item.name);
 
-        for (int i = CurrentSelect; i < _currentLength -1 ; ++i)
+        for (int i = CurrentSelect; i < CurrentLength -1 ; ++i)
         {
             SetItem(_grids[i + 1].Item, _grids[i].transform);
             _grids[i].SetItem(_grids[i + 1].Item.name);
         }
-        _currentLength--;
+        CurrentLength--;
 
-        _grids[_currentLength].SetItem("null");
+        _grids[CurrentLength].SetItem("null");
     }
 
     public void SetItem(BaseItem item, Transform parent)
@@ -83,6 +81,7 @@ public class Inventory : MonoSingleton<Inventory>
         item.transform.localPosition = Vector3.zero;
         item.transform.rotation = Quaternion.Euler(0f, 0f, -45f);
         item.transform.localScale = item.InventoryScale;
+        item.transform.localPosition = item.InventoryPos;
         item.gameObject.layer = LayerMask.NameToLayer("UI");
     }
 
