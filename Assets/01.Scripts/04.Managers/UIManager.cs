@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -11,6 +12,7 @@ public class UIManager : MonoSingleton<UIManager>
     private const string CAMNAME = "UICam";
     static AsyncOperation _async = new AsyncOperation();
     private static Camera cam;
+
 
     [RuntimeInitializeOnLoadMethod]
     private static void LoadingUIScene()
