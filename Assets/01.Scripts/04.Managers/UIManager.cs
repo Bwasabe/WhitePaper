@@ -1,3 +1,4 @@
+using static Define;
 using static Yields;
 
 using System.Collections;
@@ -37,6 +38,8 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         cam = GameObject.Find("UICam").GetComponent<Camera>();
+        var cameraData = MainCam.GetUniversalAdditionalCameraData();
+        cameraData.cameraStack.Add(cam);
         SceneManager.UnloadSceneAsync(UISCENE);
     }
 
