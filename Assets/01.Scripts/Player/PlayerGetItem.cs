@@ -22,6 +22,7 @@ public class PlayerGetItem : MonoBehaviour
     }
     private void Update() {
         GetItem();
+
     }
 
     private void GetItem(){
@@ -39,20 +40,23 @@ public class PlayerGetItem : MonoBehaviour
                 }
                 else
                 {
-                    GameObject item = Instantiate(raycastHit.transform.gameObject);
-                    Inventory.Instance.AddItem(item.GetComponent<BaseItem>());
+                    GameObject g = Instantiate(raycastHit.transform.gameObject);
+                    BaseItem item = g.GetComponent<BaseItem>();
+                    Inventory.Instance.AddItem(item);
 
                     Transform hitTransform = raycastHit.transform;
+                    
                     _playerCtrl.Skill.ClearAction();
                     _playerCtrl.Skill.RegisterAction(hitTransform.GetComponent<BaseSkill>().Skill);
 
 
                     hitTransform.SetParent(GameManager.Instance.PlayerCtrl.ItemTransform);
 
-                    hitTransform.localPosition = Vector3.zero;
-                    hitTransform.localRotation = Quaternion.Euler(0f, 0f, 180f);
-                    hitTransform.name = item.name;
+                    hitTransform.localPosition = item.HandPos;
 
+                    hitTransform.localRotation = Quaternion.Euler(item.HandRotate);
+
+                    hitTransform.name = g.name;
                     hitTransform.gameObject.SetActive(false);
                 }
             }
@@ -64,5 +68,5 @@ public class PlayerGetItem : MonoBehaviour
             Debug.Log("레이 안닿음");
         }
     }
-    
+
 }

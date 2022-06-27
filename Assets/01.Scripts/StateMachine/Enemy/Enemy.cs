@@ -14,14 +14,14 @@ public enum ENEMY_STATE
 public class Enemy : MonoBehaviour
 {
     public ENEMY_STATE ENUMSTATE{ get; set; }
-    private EnemyState _currentState;
+    private Dictionary<ENEMY_STATE, EnemyState> _currentState;
 
-    public void SetState(EnemyState state){
-        _currentState = state;
-        _currentState.Init();
+    public void SetState(ENEMY_STATE enumState,EnemyState state){
+        _currentState[enumState] = state;
+        _currentState[enumState].Init();
     }
 
     private void Update() {
-        _currentState.Update();
+        _currentState[ENUMSTATE].Update();
     }
 }

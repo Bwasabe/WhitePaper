@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 3152752950411645202}
   - component: {fileID: 795779570}
   - component: {fileID: 795779569}
-  m_Layer: 8
+  - component: {fileID: 1113850112}
+  m_Layer: 17
   m_Name: Moon_Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,8 +104,15 @@ MonoBehaviour:
   _skillExplain: "\uD558\uB298\uC744 \uB2EC\uBE5B\uC73C\uB85C \uBC14\uAFC9\uB2C8\uB2E4.\n\uB2EC\uBE5B\uC73C\uB85C
     \uBC14\uB010 \uD558\uB298 \uC544\uB798\n\uC801\uB4E4\uC744 \uBB34\uC790\uBE44\uD558\uAC8C
     \uBCA0\uC5B4\uBC84\uB9BD\uB2C8\uB2E4"
-  _itemStatus: {fileID: 11400000, guid: c852b7594932dd74f9d9aadbcbe7e738, type: 2}
+  _itemStatus:
+    _str: 10
+    _agi: 8
+    _hp: 10
+    _attackSpeed: 1.3
   _inventoryScale: {x: 70, y: 70, z: 70}
+  _inventoryPos: {x: 0, y: 0, z: 0}
+  _handPos: {x: 0, y: 0.13, z: 0.1}
+  _handRotate: {x: 0, y: 0, z: 110}
 --- !u!65 &795779570
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -136,3 +144,17 @@ MonoBehaviour:
   _attackSkybox: {fileID: 2100000, guid: 47b7a45414f3b564e9e8349bfa18b29f, type: 2}
   _attackDistance: 15
   _dashTime: 0.2
+--- !u!114 &1113850112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152752950411645203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16fb611dbeb5404e9d245c66592690c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spearAttacks:
+  - {fileID: 7400000, guid: 8e902558ec5a04a409017246af84f245, type: 2}

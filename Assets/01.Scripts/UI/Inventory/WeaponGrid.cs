@@ -9,7 +9,5 @@ public class WeaponGrid : InventoryGrid
     {
         base.OnPointerClick(eventData);
         Inventory.Instance.CurrentSelect = -1;
-
-        
     }
 }

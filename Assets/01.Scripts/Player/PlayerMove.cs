@@ -13,13 +13,12 @@ public class PlayerMove : MonoBehaviour
         DASH = 1 << 0,//1
         JUMP = 1 << 1,//2
         MOVE = 1 << 2,//4
+        ATTACK = 1 << 3,
     }
 
     public PLAYERSTATE PlayerState { get; set; }
 
 
-    [SerializeField]
-    private float _speed = 8f;
     [SerializeField]
     private float _jumpForce = 15f;
     [SerializeField]
@@ -28,9 +27,13 @@ public class PlayerMove : MonoBehaviour
     private float _gravityScale = 3f;
 
     [SerializeField]
+    private int _jumpMaxCount = 1;
+    [SerializeField]
+    private int _jumpCount;
+
+
+    [SerializeField]
     private LayerMask _groundLayer;
-
-
 
 
     private Transform _camTransform = null;
@@ -45,17 +48,10 @@ public class PlayerMove : MonoBehaviour
 
     public bool IsNotGravity { get; set; } = false;
 
-    private Animator _animator;
-
-    private int VELOCITYHHASH = Animator.StringToHash("VelocityH");
-    //private int VELOCITYVHASH = Animator.StringToHash("VelocityV");
-
-    private int JUMPHASH = Animator.StringToHash("Jump");
-    private int RETURNTOSTATEHASH = Animator.StringToHash("ReturnToState");
-
+    private Status _playerStatus;
     private void Start()
     {
-        _animator = GetComponent<Animator>();
+        _playerStatus = GameManager.Instance.PlayerCtrl.PlayerStatus;
         _characterController = GetComponent<CharacterController>();
         _camTransform = Camera.main.transform;
 
@@ -63,10 +59,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-
         Move();
         Jump();
-        ReadyDash();
     }
 
     private void Move()
@@ -79,7 +73,7 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 right = new Vector3(forward.z, 0f, -forward.x);
 
-        Vector3 dir = (right * h + forward * v).normalized * _speed;
+        Vector3 dir = (right * h + forward * v).normalized * _playerStatus.Agi;
 
         _currentHit = _characterController.Move(dir * Time.deltaTime * GameManager.TimeScale);
         if (dir == Vector3.zero)
@@ -87,52 +81,78 @@ public class PlayerMove : MonoBehaviour
         else
             PlayerState |= PLAYERSTATE.MOVE;
 
-        _animator.SetFloat(VELOCITYHHASH, dir.x + dir.z);
     }
 
-
+    Vector3 pos1;
+    Vector3 pos2;
     private bool IsGround()
     {
-        Vector3 pos1 = transform.position + _characterController.center;
+        pos1 = transform.position + _characterController.center;
         float value = _characterController.height * 0.5f;
         pos1.y += value;
-        Vector3 pos2 = transform.position + _characterController.center;
-        pos2.y -= value;
-        
+        pos2 = transform.position;
 
         return Physics.CheckCapsule(pos1, pos2, _characterController.radius, _groundLayer);
     }
 
-    // private void OnGUI() {
-    //     var labelStyle = new GUIStyle();
-    //     labelStyle.fontSize = 50;
-    //     labelStyle.normal.textColor = Color.red;
-
-    //     GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
-    //     GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
+    // private void OnDrawGizmos() {
+    //     Gizmos.DrawSphere(new Vector3(pos2.x,pos2.y + _characterController.radius, pos2.z), _characterController.radius);
     // }
+
+    private void OnGUI()
+    {
+        var labelStyle = new GUIStyle();
+        labelStyle.fontSize = 50;
+        labelStyle.normal.textColor = Color.red;
+
+        GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
+        GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
+        GUILayout.Label($"플레이어 중력 : {_playerVelocity.y}", labelStyle);
+
+        GUILayout.Label($"Pos1 : {transform.forward}", labelStyle);
+        GUILayout.Label($"Pos2 : {pos2}", labelStyle);
+        GUILayout.Label($"스테이트 : {PlayerState}", labelStyle);
+    }
 
 
     private void Jump()
     {
         if (IsGround() && _playerVelocity.y <= 0f)
         {
+            _jumpCount = 0;
             _playerVelocity.y = 0f;
             PlayerState &= ~PLAYERSTATE.JUMP;
         }
         else
         {
             if (!IsNotGravity)
+            {
+                Debug.Log("중력 작용중");
                 _playerVelocity.y += Physics.gravity.y * Time.deltaTime * _gravityScale * GameManager.TimeScale;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Space) && IsGround())
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _playerVelocity.y += Mathf.Sqrt(_jumpForce * -2.0f * Physics.gravity.y);
-            PlayerState |= PLAYERSTATE.JUMP;
-            _animator.SetTrigger(JUMPHASH);
+            if (!Physics.CheckCapsule(pos1, new Vector3(pos2.x, pos2.y - 1f, pos2.z), _characterController.radius, _groundLayer))
+            {
+                Debug.Log("땅이 없음");
+                _jumpCount = 1;
+            }
+            else
+            {
+                Debug.Log("땅이 있음");
+            }
+            if (_jumpCount < _jumpMaxCount)
+            {
+                _jumpCount++;
+                _playerVelocity.y = Mathf.Sqrt(_jumpForce * -2.0f * Physics.gravity.y) * GameManager.TimeScale;
+                PlayerState |= PLAYERSTATE.JUMP;
+            }
+
+            // _animator.SetTrigger(JUMPHASH);
         }
 
-        
+
 
         _currentHit = _characterController.Move(_playerVelocity * Time.deltaTime * GameManager.TimeScale);
     }

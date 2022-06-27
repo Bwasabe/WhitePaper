@@ -71,7 +71,7 @@ public class InventoryGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _nameText.text = _item.Name;
         _nameText.color = _item.NameColor;
 
-        _statusText.text = $"힘 {_item.ItemStatus.Str} \n민첩 {_item.ItemStatus.Agi} \n체력 {_item.ItemStatus.Hp} \n공격속도 {_item.ItemStatus.AttackSpeed}";
+        _statusText.text = $"힘 {_item.ItemStatus.Str} \n민첩 {_item.ItemStatus.Agi}"/* \n체력 {_item.ItemStatus.Hp} \n공격속도 {_item.ItemStatus.AttackSpeed}"*/;
 
         _skillNameText.text = _item.SkillName;
         _skillNameText.color = _item.SkillNameColor;

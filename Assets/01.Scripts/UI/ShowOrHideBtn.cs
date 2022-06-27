@@ -17,6 +17,7 @@ public class ShowOrHideBtn : MonoBehaviour
     [SerializeField]
     private List<GameObject> _activeObjs = new List<GameObject>();
 
+
     [SerializeField]
     protected BUTTONTYPE _buttonType = BUTTONTYPE.NONE;
 

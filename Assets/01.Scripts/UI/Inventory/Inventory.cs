@@ -22,10 +22,11 @@ public class Inventory : MonoSingleton<Inventory>
 
     private Transform _playerHand = null;
 
-    private ExecuteSkill _executeSkill;
+    private PlayerExecuteSkill _executeSkill;
+    private PlayerAttack _playerAttack;
 
     public int CurrentLength { get; set; } = 0;
-    public int InventorySize{ get; set; } = 20;
+    public int InventorySize { get; set; } = 20;
 
     public int CurrentSelect { get; set; }
 
@@ -33,22 +34,15 @@ public class Inventory : MonoSingleton<Inventory>
 
     private void Start()
     {
+        _playerAttack = GameManager.Instance.PlayerCtrl.Attack;
         _playerCtrl = GameManager.Instance.PlayerCtrl;
         for (int i = 0; i < InventorySize; ++i)
         {
             AddGrid(i);
         }
 
-        // AddItem(_teset);
-        // AddItem(_tese1t);
-        // AddItem(_tese1t2);
         _executeSkill = _playerCtrl.Skill;
         _playerHand = _playerCtrl.ItemTransform;
-    }
-
-    private void Update()
-    {
-        Debug.Log(CurrentSelect);
     }
 
     public void AddItem(BaseItem item)
@@ -65,7 +59,7 @@ public class Inventory : MonoSingleton<Inventory>
 
         _weaponGrid.SetItem(item.name);
 
-        for (int i = CurrentSelect; i < CurrentLength -1 ; ++i)
+        for (int i = CurrentSelect; i < CurrentLength - 1; ++i)
         {
             SetItem(_grids[i + 1].Item, _grids[i].transform);
             _grids[i].SetItem(_grids[i + 1].Item.name);
@@ -105,10 +99,8 @@ public class Inventory : MonoSingleton<Inventory>
         {
             SetWeapon(_grids[CurrentSelect].Item);
 
-            _executeSkill.ClearAction();
-            _executeSkill.RegisterAction(_playerHand.Find(_weaponGrid.Item.name).GetComponent<BaseSkill>().Skill);
-            //_executeSkill.RegisterAction(_weaponGrid.Item.GetComponent<BaseSkill>().Skill);
-            Debug.Log(_weaponGrid.Item.name);
+            Register(_playerHand.Find(_weaponGrid.Item.name));
+
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(true);
         }
         else
@@ -118,9 +110,7 @@ public class Inventory : MonoSingleton<Inventory>
             _playerHand.Find(_grids[CurrentSelect].Item.name).gameObject.SetActive(true);
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(false);
 
-            // // 스킬 초기화 및 등록
-            _executeSkill.ClearAction();
-            _executeSkill.RegisterAction(_playerHand.Find(_grids[CurrentSelect].Item.name).GetComponent<BaseSkill>().Skill);
+            Register(_playerHand.Find(_grids[CurrentSelect].Item.name));
 
             // UI 아이템 스왑
             SetItem(_weaponGrid.Item, _grids[CurrentSelect].transform);
@@ -131,9 +121,25 @@ public class Inventory : MonoSingleton<Inventory>
             _grids[CurrentSelect].SetItem(_weaponGrid.Item.name);
 
             _weaponGrid.SetItem(temp);
+
         }
+        //플레이어 스텟 설정
+        _playerCtrl.PlayerStatus = new Status(_weaponGrid.Item.ItemStatus);
+        
         CurrentSelect = -1;
 
+    }
+
+    private void Register(Transform t)
+    {
+        //스킬 등록
+        _executeSkill.ClearAction();
+        _executeSkill.RegisterAction(t.GetComponent<BaseSkill>().Skill);
+
+        _playerAttack.ClearAction();
+        _playerAttack.RegisterAction(t.GetComponent<BaseAttack>().Attack);
+
+        _playerCtrl.AnimationController.RegisterCol(t.GetComponent<Collider>());
     }
 
 }

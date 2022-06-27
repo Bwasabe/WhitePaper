@@ -5427,7 +5427,6 @@ GameObject:
   - component: {fileID: 1766898986}
   - component: {fileID: 1766898988}
   - component: {fileID: 1766898990}
-  - component: {fileID: 1766898989}
   m_Layer: 5
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -5596,26 +5595,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1766898989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1766898984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5acde53dabf3440b9651fa155b247e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _activeObjs:
-  - {fileID: 1177273642}
-  _buttonType: 2
-  _uiCanvasGroup: {fileID: 1177273644}
-  _interectBtns:
-  - {fileID: 2120837321}
-  _showDuration: 1
-  _hideDuration: 1
 --- !u!114 &1766898990
 MonoBehaviour:
   m_ObjectHideFlags: 0
