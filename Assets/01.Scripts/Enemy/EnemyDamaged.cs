@@ -10,17 +10,23 @@ public class EnemyDamaged : CharacterDamaged
 
     [SerializeField]
     private Color _hitColor;
+
+    private Enemy _enemy;
+
+    private void Start() {
+        _enemy = GetComponent<Enemy>();
+    }
     public override void Damage(int damage)
     {
         base.Damage(damage);
 
         if(_hp >= 0){
-            _renderer.material.DOColor(_hitColor, 0.1f).SetLoops(2, LoopType.Yoyo);
+            _renderer.material.DOColor(_hitColor, 0.3f).SetLoops(2, LoopType.Yoyo);
         }
     }
+
     protected override void Dead()
     {
-        Debug.Break();
+        _enemy.ChangeState(ENEMY_STATE.DEAD);
     }
-
 }

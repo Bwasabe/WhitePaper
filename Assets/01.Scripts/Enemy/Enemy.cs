@@ -9,6 +9,7 @@ public enum ENEMY_STATE
     CHASE,
     INVINCIBLE,
     DEAD,
+    ATTACK,
 }
 
 public class Enemy : MonoBehaviour
@@ -35,4 +36,5 @@ public class Enemy : MonoBehaviour
     {
         _stateMachine[CurrentState].EnemyUpdate();
     }
+
 }

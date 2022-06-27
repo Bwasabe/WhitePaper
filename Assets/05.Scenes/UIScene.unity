@@ -5564,7 +5564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -5609,6 +5609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeObjs:
   - {fileID: 1177273642}
+  _hideFirstObject: {fileID: 1464565888}
   _buttonType: 2
   _uiCanvasGroup: {fileID: 1177273644}
   _interectBtns:
@@ -6928,7 +6929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -7011,6 +7012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeObjs:
   - {fileID: 1177273642}
+  _hideFirstObject: {fileID: 1464565888}
   _buttonType: 1
   _uiCanvasGroup: {fileID: 1177273644}
   _interectBtns:

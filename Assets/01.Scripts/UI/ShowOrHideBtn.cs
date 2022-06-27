@@ -17,6 +17,8 @@ public class ShowOrHideBtn : MonoBehaviour
     [SerializeField]
     private List<GameObject> _activeObjs = new List<GameObject>();
 
+    [SerializeField]
+    private GameObject _hideFirstObject;
 
     [SerializeField]
     protected BUTTONTYPE _buttonType = BUTTONTYPE.NONE;
@@ -43,22 +45,23 @@ public class ShowOrHideBtn : MonoBehaviour
     {
         _button = GetComponent<Button>();
 
-        switch (_buttonType)
-        {
-            case BUTTONTYPE.SHOW:
-                _button.onClick.AddListener(OnClickShow);
-                break;
-            case BUTTONTYPE.HIDE:
-                _button.onClick.AddListener(OnClickHide);
-                break;
-            default:
-                Debug.LogError("버튼 타입이 잘못되었습니다");
-                break;
-        }
+        // switch (_buttonType)
+        // {
+        //     case BUTTONTYPE.SHOW:
+        //         _button.onClick.AddListener(OnClickShow);
+        //         break;
+        //     case BUTTONTYPE.HIDE:
+        //         _button.onClick.AddListener(OnClickHide);
+        //         break;
+        //     default:
+        //         Debug.LogError("버튼 타입이 잘못되었습니다");
+        //         break;
+        // }
     }
 
     protected virtual void OnClickShow()
     {
+
         if (_hideTweener.IsActive())
         {
             _hideTweener.Kill();
@@ -67,19 +70,20 @@ public class ShowOrHideBtn : MonoBehaviour
 
             _activeObjs.ForEach(obj =>
             {
-                    if (obj.activeSelf)
-                    {
-                        obj.SetActive(false);
-                    }
+                if (obj.activeSelf)
+                {
+                    obj.SetActive(false);
+                }
             });
             _uiCanvasGroup.alpha = 0f;
         }
         SetShowValue();
+        _hideFirstObject.SetActive(true);
         _showTweener = DOTween.To(
             () => _uiCanvasGroup.alpha,
             value => _uiCanvasGroup.alpha = value,
             1f, _showDuration
-        );
+        ).OnComplete(() => Time.timeScale = 0f);
     }
 
     private void SetShowValue()
@@ -101,15 +105,17 @@ public class ShowOrHideBtn : MonoBehaviour
 
     protected virtual void OnClickHide()
     {
-        if(_showTweener.IsActive()){
+        if (_showTweener.IsActive())
+        {
             _showTweener.Kill();
             SetShowValue();
 
             _uiCanvasGroup.alpha = 1f;
         }
+        Time.timeScale = 1f;
 
         SetHideValue();
-
+        _hideFirstObject.SetActive(false);
         _hideTweener = DOTween.To(
             () => _uiCanvasGroup.alpha,
             value => _uiCanvasGroup.alpha = value,
@@ -118,15 +124,16 @@ public class ShowOrHideBtn : MonoBehaviour
         {
             _activeObjs.ForEach(obj =>
             {
-                    if (obj.activeSelf)
-                    {
-                        obj.SetActive(false);
-                    }
+                if (obj.activeSelf)
+                {
+                    obj.SetActive(false);
+                }
             });
         });
     }
 
-    private void SetHideValue(){
+    private void SetHideValue()
+    {
         _interectBtns.ForEach(x => x.interactable = true);
         _button.interactable = false;
 

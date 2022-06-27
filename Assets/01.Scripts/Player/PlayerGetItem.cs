@@ -3,6 +3,7 @@ using static Define;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerGetItem : MonoBehaviour
 {
@@ -12,30 +13,40 @@ public class PlayerGetItem : MonoBehaviour
     [SerializeField]
     private LayerMask _itemLayer;
 
+    [SerializeField]
+    private Text _textObject;
+
     private Transform _camTransform = null;
 
     private PlayerController _playerCtrl = null;
-    private void Start() {
+    private void Start()
+    {
         _camTransform = MainCam.transform;
 
         _playerCtrl = GameManager.Instance.PlayerCtrl;
     }
-    private void Update() {
+    private void Update()
+    {
         GetItem();
 
     }
 
-    private void GetItem(){
+    private void GetItem()
+    {
         Ray ray = new Ray(_camTransform.position, _camTransform.forward * _itemRange);
 
         RaycastHit raycastHit;
 
-        Debug.DrawRay(ray.origin,ray.direction * _itemRange, Color.white, 1f);
-        if(Physics.Raycast(ray,out raycastHit, _itemRange   , _itemLayer)){
-            if(Input.GetKeyDown(KeyCode.F)){
+        Debug.DrawRay(ray.origin, ray.direction * _itemRange, Color.white, 1f);
+        if (Physics.Raycast(ray, out raycastHit, _itemRange, _itemLayer))
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
                 Debug.Log("아이템 획득");
-                if(Inventory.Instance.CurrentLength >= Inventory.Instance.InventorySize){
-                    Debug.Log("인벤토리가 꽉참");
+                if (Inventory.Instance.CurrentLength >= Inventory.Instance.InventorySize)
+                {
+                    _textObject.text = "아이템이 가득 차 더는 획득이 불가능 합니다";
+                    _textObject.gameObject.SetActive(true);
                     return;
                 }
                 else
@@ -46,7 +57,7 @@ public class PlayerGetItem : MonoBehaviour
 
                     Transform hitTransform = raycastHit.transform;
 
-                    //hitTransform.
+                    hitTransform.GetComponent<Collider>().enabled = false;
 
                     hitTransform.SetParent(GameManager.Instance.PlayerCtrl.ItemTransform);
 
@@ -58,12 +69,15 @@ public class PlayerGetItem : MonoBehaviour
                     hitTransform.gameObject.SetActive(false);
                 }
             }
-            else{
-                Debug.Log("F를 눌러 아이템 획득 가능");
+            else
+            {
+                _textObject.gameObject.SetActive(true);
             }
         }
-        else{
-            Debug.Log("레이 안닿음");
+        else
+        {
+            _textObject.gameObject.SetActive(false);
+
         }
     }
 

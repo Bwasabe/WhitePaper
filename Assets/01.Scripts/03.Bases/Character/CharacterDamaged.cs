@@ -10,7 +10,7 @@ public abstract class CharacterDamaged : MonoBehaviour, IDamageable
     public virtual void Damage(int damage)
     {
         _hp -= damage;
-        Debug.Log("맞음");
+
         if (_hp <= 0)
         {
             Dead();

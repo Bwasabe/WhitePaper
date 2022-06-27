@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
 
+    [SerializeField ]
     private Collider _col;
 
     public void RegisterCol(Collider col){

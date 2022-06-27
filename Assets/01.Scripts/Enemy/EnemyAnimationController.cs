@@ -17,6 +17,7 @@ public class EnemyAnimationController : MonoBehaviour
 
     private void Update()
     {
-        _animator.SetInteger(STATE, (int)_enemy.CurrentState);
+        if(_enemy.CurrentState == ENEMY_STATE.INVINCIBLE || _enemy.CurrentState == ENEMY_STATE.DEAD)return;
+            _animator.SetInteger(STATE, (int)_enemy.CurrentState);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseAttack : MonoBehaviour
+public class BaseAttack : MonoBehaviour
 {
     protected BaseItem _baseItem;
 
@@ -13,12 +13,14 @@ public abstract class BaseAttack : MonoBehaviour
         _baseItem = GetComponent<BaseItem>();
     }
 
-    public abstract void Attack();
+    public virtual void Attack(){}
 
     protected virtual void OnTriggerEnter(Collider other) {
-        Debug.Log("맞음");
         if((1 << other.gameObject.layer & _hitLayers) > 0){
-            other.GetComponent<IDamageable>().Damage(_baseItem.ItemStatus.Str);
+            IDamageable damageable = other.GetComponent<IDamageable>();
+            if(damageable != null)
+                damageable.Damage(_baseItem.ItemStatus.Str);
         }
     }
+
 }

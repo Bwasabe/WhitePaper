@@ -64,7 +64,7 @@ public class CameraMove : MonoBehaviour
         labelStyle.fontSize = 50;
         labelStyle.normal.textColor = Color.red;
 
-        GUI.Label(new Rect(-40, 500, 100, 100), $"땅에 닿았는가 : {_player.eulerAngles}", labelStyle);
+        GUI.Label(new Rect(-40, 500, 100, 100), $"플레이어 얼굴 각도 : {_player.eulerAngles}", labelStyle);
 
     }
 

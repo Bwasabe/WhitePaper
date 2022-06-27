@@ -13,15 +13,17 @@ public class EnemyIdle : EnemyState
     [SerializeField]
     private Vector2 _randomValue;
 
+
+    private EnemyChase _enemyChase;
     private void Start() {
         _enemy.SetState(ENEMY_STATE.IDLE,this);
         _enemy.ChangeState(ENEMY_STATE.IDLE);
+        _enemyChase = GetComponent<EnemyChase>();
     }
 
     public override void Init()
     {
         StartCoroutine(IdleToPatrol());
-        Debug.Log("Idle Init");
     }
 
     private IEnumerator IdleToPatrol(){
@@ -32,6 +34,7 @@ public class EnemyIdle : EnemyState
 
     public override void EnemyUpdate()
     {
-        
+        _enemyChase.CheckChase();
     }
+
 }
