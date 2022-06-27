@@ -6,25 +6,31 @@ using UnityEngine;
 
 public class EnemyIdle : EnemyState
 {
+
+    //TODO: private
+    public float _idleDuration = 0f;
+
     [SerializeField]
-    private float _idleDuration = 0f;
+    private Vector2 _randomValue;
 
     private void Start() {
         _enemy.SetState(ENEMY_STATE.IDLE,this);
+        _enemy.ChangeState(ENEMY_STATE.IDLE);
     }
 
     public override void Init()
     {
         StartCoroutine(IdleToPatrol());
+        Debug.Log("Idle Init");
     }
 
     private IEnumerator IdleToPatrol(){
-        _idleDuration = Random.Range(0.5f, 1.5f);
+        _idleDuration = Random.Range(_randomValue.x, _randomValue.y);
         yield return WaitForSeconds(_idleDuration);
-        _enemy.ENUMSTATE = ENEMY_STATE.PATROL;
+        _enemy.ChangeState(ENEMY_STATE.PATROL);
     }
 
-    public override void Update()
+    public override void EnemyUpdate()
     {
         
     }

@@ -14,6 +14,9 @@ public class MoonUltimate : BaseSkill
     private Material _attackSkybox;
 
     [SerializeField]
+    private float _lightIntencity = 0.2f;
+
+    [SerializeField]
     private float _attackDistance = 8f;
 
     //몇초만에 도착했으면 좋겠는지
@@ -47,7 +50,7 @@ public class MoonUltimate : BaseSkill
         Debug.Log("잉ㅁㄴㅇ");
         if (!_isSkill)
         {
-            _readyToUltimateTween = _light.DOIntensity(0f, 1f).OnComplete(() =>
+            _readyToUltimateTween = _light.DOIntensity(_lightIntencity, 1f).OnComplete(() =>
             {
                 RenderSettings.skybox = _attackSkybox;
 

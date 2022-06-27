@@ -45,10 +45,8 @@ public class PlayerGetItem : MonoBehaviour
                     Inventory.Instance.AddItem(item);
 
                     Transform hitTransform = raycastHit.transform;
-                    
-                    _playerCtrl.Skill.ClearAction();
-                    _playerCtrl.Skill.RegisterAction(hitTransform.GetComponent<BaseSkill>().Skill);
 
+                    //hitTransform.
 
                     hitTransform.SetParent(GameManager.Instance.PlayerCtrl.ItemTransform);
 

@@ -10,7 +10,7 @@ public class EnemyAttack : EnemyState
         
     }
 
-    public override void Update()
+    public override void EnemyUpdate()
     {
         
     }

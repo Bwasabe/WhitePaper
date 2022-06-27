@@ -100,7 +100,7 @@ public class Inventory : MonoSingleton<Inventory>
             SetWeapon(_grids[CurrentSelect].Item);
 
             Register(_playerHand.Find(_weaponGrid.Item.name));
-
+            
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(true);
         }
         else

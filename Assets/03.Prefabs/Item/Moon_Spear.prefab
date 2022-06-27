@@ -107,8 +107,6 @@ MonoBehaviour:
   _itemStatus:
     _str: 10
     _agi: 8
-    _hp: 10
-    _attackSpeed: 1.3
   _inventoryScale: {x: 70, y: 70, z: 70}
   _inventoryPos: {x: 0, y: 0, z: 0}
   _handPos: {x: 0, y: 0.13, z: 0.1}
@@ -142,6 +140,7 @@ MonoBehaviour:
   _executeSkill: {fileID: 0}
   _light: {fileID: 0}
   _attackSkybox: {fileID: 2100000, guid: 47b7a45414f3b564e9e8349bfa18b29f, type: 2}
+  _lightIntencity: 1
   _attackDistance: 15
   _dashTime: 0.2
 --- !u!114 &1113850112
@@ -156,5 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16fb611dbeb5404e9d245c66592690c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitLayers:
+    serializedVersion: 2
+    m_Bits: 32768
   _spearAttacks:
   - {fileID: 7400000, guid: 8e902558ec5a04a409017246af84f245, type: 2}

@@ -13,5 +13,5 @@ public abstract class EnemyState : MonoBehaviour
 
     public abstract void Init();
 
-    public abstract void Update();
+    public abstract void EnemyUpdate();
 }
