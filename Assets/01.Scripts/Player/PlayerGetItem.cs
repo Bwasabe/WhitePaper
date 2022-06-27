@@ -63,6 +63,8 @@ public class PlayerGetItem : MonoBehaviour
 
                     hitTransform.localPosition = item.HandPos;
 
+                    hitTransform.gameObject.layer = 0;
+
                     hitTransform.localRotation = Quaternion.Euler(item.HandRotate);
 
                     hitTransform.name = g.name;

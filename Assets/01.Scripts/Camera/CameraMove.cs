@@ -58,14 +58,14 @@ public class CameraMove : MonoBehaviour
 
     }
 
-    private void OnGUI()
-    {
-        var labelStyle = new GUIStyle();
-        labelStyle.fontSize = 50;
-        labelStyle.normal.textColor = Color.red;
+    // private void OnGUI()
+    // {
+    //     var labelStyle = new GUIStyle();
+    //     labelStyle.fontSize = 50;
+    //     labelStyle.normal.textColor = Color.red;
 
-        GUI.Label(new Rect(-40, 500, 100, 100), $"플레이어 얼굴 각도 : {_player.eulerAngles}", labelStyle);
+    //     GUI.Label(new Rect(-40, 500, 100, 100), $"플레이어 얼굴 각도 : {_player.eulerAngles}", labelStyle);
 
-    }
+    // }
 
 }
