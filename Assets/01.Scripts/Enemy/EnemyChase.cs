@@ -50,8 +50,11 @@ public class EnemyChase : EnemyState
 
         _rb.velocity = dir * _runSpeed;
 
-        if(dir != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir * Time.deltaTime), _angleSmooth * Time.deltaTime);
+        if(dir != Vector3.zero){
+            Vector3 rotateDir = dir;
+            rotateDir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotateDir * Time.deltaTime), _angleSmooth * Time.deltaTime);
+        }
     }
 
     protected void CheckDistance(){
@@ -70,7 +73,6 @@ public class EnemyChase : EnemyState
         float magDistance = dir.sqrMagnitude;
 
         if(magDistance <= Mathf.Pow(_attackRange, 2f)){
-            Debug.Log("어택");
             _enemy.ChangeState(ENEMY_STATE.ATTACK);
         }
     }

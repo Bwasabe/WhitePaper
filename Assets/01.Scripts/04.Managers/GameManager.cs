@@ -35,4 +35,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private PlayerController _playerCtrl;
 
+    [SerializeField]
+    private Transform _firstEnterTransform;
+
+    public Transform FirstEnterTransform => _firstEnterTransform;
+
 }
