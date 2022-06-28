@@ -20,7 +20,7 @@ public class EnemyChase : EnemyState
     [SerializeField]
     private float _angleSmooth = 5f;
 
-    private Transform _target;
+    protected Transform _target;
 
     private Rigidbody _rb;
 
@@ -41,8 +41,11 @@ public class EnemyChase : EnemyState
         CheckAttack();
     }
 
-    private void ChaseTarget(){
-        Vector3 dir = _target.position - transform.position;
+    protected void ChaseTarget(){
+        Vector3 targetPos = _target.position;
+        targetPos.y = transform.position.y;
+        Vector3 dir = targetPos - transform.position;
+
         dir.Normalize();
 
         _rb.velocity = dir * _runSpeed;
@@ -51,7 +54,7 @@ public class EnemyChase : EnemyState
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir * Time.deltaTime), _angleSmooth * Time.deltaTime);
     }
 
-    private void CheckDistance(){
+    protected void CheckDistance(){
         Vector3 dir = _target.position - transform.position;
 
         float magDistance = dir.sqrMagnitude;
@@ -61,7 +64,7 @@ public class EnemyChase : EnemyState
         }
     }
 
-    private void CheckAttack(){
+    protected void CheckAttack(){
         Vector3 dir = _target.position - transform.position;
 
         float magDistance = dir.sqrMagnitude;

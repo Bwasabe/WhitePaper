@@ -31,7 +31,7 @@ public class EnemyPatrol : EnemyState
 
     public override void Init()
     {
-        _dir = new Vector3(Random.Range(-1f, 1f), _rb.velocity.y, Random.Range(-1f, 1f)).normalized;
+        _dir = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
         _moveMaxTimer = Random.Range(_randomValue.x, _randomValue.y);
     }
 
@@ -46,6 +46,7 @@ public class EnemyPatrol : EnemyState
             _enemy.ChangeState(ENEMY_STATE.IDLE);
             return;
         }
+        _dir.y = _rb.velocity.y;
         _rb.velocity = _dir * _speed;
         if (_dir != Vector3.zero)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_dir * Time.deltaTime), _angleSmooth * Time.deltaTime);

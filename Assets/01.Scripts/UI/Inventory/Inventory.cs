@@ -102,6 +102,7 @@ public class Inventory : MonoSingleton<Inventory>
             Register(_playerHand.Find(_weaponGrid.Item.name));
             
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(true);
+
         }
         else
         {
@@ -133,13 +134,18 @@ public class Inventory : MonoSingleton<Inventory>
     private void Register(Transform t)
     {
         //스킬 등록
+        BaseSkill skill = t.GetComponent<BaseSkill>();
         _executeSkill.ClearAction();
-        _executeSkill.RegisterAction(t.GetComponent<BaseSkill>().Skill);
+        _executeSkill.RegisterAction(skill.Skill);
+
+        UIManager.Instance.SkillIcon.sprite = skill.SkillSprite;
 
         _playerAttack.ClearAction();
         _playerAttack.RegisterAction(t.GetComponent<BaseAttack>().Attack);
 
         _playerCtrl.AnimationController.RegisterCol(t.GetComponent<Collider>());
+
+
     }
 
 }

@@ -7,8 +7,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
 {
     public int CurrentEnemyCount{ get; set; }
 
-    [SerializeField]
-    private List<Enemy> _enemyLists = new List<Enemy>();
+    public List<Enemy> EnemyList { get; set; } = new List<Enemy>();
 
     [SerializeField]
     private Text _enemyText;
@@ -21,9 +20,9 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     }
 
     public void CheckEnemy(){
-        _enemyText.text = $"{CurrentEnemyCount} / {_enemyLists.Count}";
+        _enemyText.text = $"{CurrentEnemyCount} / {EnemyList.Count}";
 
-        if(CurrentEnemyCount == _enemyLists.Count){
+        if(CurrentEnemyCount == EnemyList.Count){
             _enemyText.gameObject.SetActive(false);
 
             _infoText.text = $"와 적들을 모두 죽였어요!";

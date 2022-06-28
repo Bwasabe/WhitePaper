@@ -1,3 +1,4 @@
+using static Define;
 using static Yields;
 
 using System.Collections;
@@ -49,12 +50,17 @@ public class PlayerMove : MonoBehaviour
     public bool IsNotGravity { get; set; } = false;
 
     private Status _playerStatus;
+
+    private Animator _animator;
+
+    private readonly int WALK = Animator.StringToHash("Walk");
+    private readonly int PLAYERSTATEHASH = Animator.StringToHash("PlayerState");
     private void Start()
     {
         _playerStatus = GameManager.Instance.PlayerCtrl.PlayerStatus;
         _characterController = GetComponent<CharacterController>();
-        _camTransform = Camera.main.transform;
-
+        _camTransform = MainCam.transform;
+        _animator = GameManager.Instance.PlayerCtrl.Animator;
     }
 
     private void Update()
@@ -77,9 +83,22 @@ public class PlayerMove : MonoBehaviour
 
         _currentHit = _characterController.Move(dir * Time.deltaTime * GameManager.TimeScale);
         if (dir == Vector3.zero)
+        {
+            if (!(PlayerState.HasFlag(PLAYERSTATE.JUMP) || PlayerState.HasFlag(PLAYERSTATE.ATTACK)))
+            {
+                _animator.SetInteger(PLAYERSTATEHASH, (int)PLAYERSTATE.IDLE);
+            }
             PlayerState &= ~PLAYERSTATE.MOVE;
+        }
         else
+        {
+            if (!(PlayerState.HasFlag(PLAYERSTATE.JUMP) || PlayerState.HasFlag(PLAYERSTATE.ATTACK)))
+            {
+                _animator.SetInteger(PLAYERSTATEHASH, (int)PLAYERSTATE.MOVE);
+            }
             PlayerState |= PLAYERSTATE.MOVE;
+        }
+
 
     }
 
@@ -95,24 +114,20 @@ public class PlayerMove : MonoBehaviour
         return Physics.CheckCapsule(pos1, pos2, _characterController.radius, _groundLayer);
     }
 
-    // private void OnDrawGizmos() {
-    //     Gizmos.DrawSphere(new Vector3(pos2.x,pos2.y + _characterController.radius, pos2.z), _characterController.radius);
-    // }
+    private void OnGUI()
+    {
+        var labelStyle = new GUIStyle();
+        labelStyle.fontSize = 50;
+        labelStyle.normal.textColor = Color.red;
 
-    // private void OnGUI()
-    // {
-    //     var labelStyle = new GUIStyle();
-    //     labelStyle.fontSize = 50;
-    //     labelStyle.normal.textColor = Color.red;
+        GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
+        GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
+        GUILayout.Label($"플레이어 중력 : {_playerVelocity.y}", labelStyle);
 
-    //     GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
-    //     GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
-    //     GUILayout.Label($"플레이어 중력 : {_playerVelocity.y}", labelStyle);
-
-    //     GUILayout.Label($"Pos1 : {transform.forward}", labelStyle);
-    //     GUILayout.Label($"Pos2 : {pos2}", labelStyle);
-    //     GUILayout.Label($"스테이트 : {PlayerState}", labelStyle);
-    // }
+        GUILayout.Label($"Pos1 : {transform.forward}", labelStyle);
+        GUILayout.Label($"Pos2 : {pos2}", labelStyle);
+        GUILayout.Label($"스테이트 : {PlayerState}", labelStyle);
+    }
 
 
     private void Jump()
@@ -149,7 +164,7 @@ public class PlayerMove : MonoBehaviour
                 PlayerState |= PLAYERSTATE.JUMP;
             }
 
-            // _animator.SetTrigger(JUMPHASH);
+            _animator.SetInteger(PLAYERSTATEHASH,(int)PLAYERSTATE.JUMP);
         }
 
 

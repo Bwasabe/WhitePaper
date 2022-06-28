@@ -137,12 +137,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillType: 1
+  _skillSprite: {fileID: 21300000, guid: 0e7966e8857d9da42bd7ac9668f85ce2, type: 3}
   _executeSkill: {fileID: 0}
   _light: {fileID: 0}
   _attackSkybox: {fileID: 2100000, guid: 47b7a45414f3b564e9e8349bfa18b29f, type: 2}
   _lightIntencity: 1
+  _oldLightIntencity: 5
   _attackDistance: 15
   _dashTime: 0.2
+  _skillMaxCount: 3
 --- !u!114 &1113850112
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,49 +1,35 @@
-using static Define;
-using static Yields;
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
+using DG.Tweening;
+using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    private const string UISCENE = "UIScene";
-    private const string CAMNAME = "UICam";
-    static AsyncOperation _async = new AsyncOperation();
-    private static Camera cam;
+    [SerializeField]
+    private Image _skillIcon;
 
+    public Image SkillIcon => _skillIcon;
 
-    [RuntimeInitializeOnLoadMethod]
-    private static void LoadingUIScene()
+    private RectMask2D _skillRectMask;
+
+    public RectMask2D SkillRectMask => _skillRectMask;
+
+    private void Start()
     {
-        if (SceneManager.GetActiveScene().name == UISCENE) return;
-        _async = SceneManager.LoadSceneAsync(UISCENE, LoadSceneMode.Additive);
-        StartAfterCor(Instance);
+        _skillRectMask = _skillIcon.transform.parent.GetComponent<RectMask2D>();
     }
 
-    public static void StartAfterCor(MonoBehaviour script)
+    public void DOSkillIcon(float endValue, float duration, Action callBack = null)
     {
-        script.StartCoroutine(AfterLoadUIScene());
-    }
-
-    public static IEnumerator AfterLoadUIScene()
-    {
-        yield return WaitUntil(() => _async.isDone);
-        GameObject[] objs = SceneManager.GetSceneByName(UISCENE).GetRootGameObjects();
-        for (int i = 0; i < objs.Length; i++)
+        DOTween.To(
+            () => _skillRectMask.padding.w,
+            value => _skillRectMask.padding = new Vector4(0f, 0f, 0f, value),
+            endValue, duration
+        ).OnComplete(() =>
         {
-            SceneManager.MoveGameObjectToScene(objs[i], SceneManager.GetActiveScene());
-        }
-
-        cam = GameObject.Find("UICam").GetComponent<Camera>();
-        var cameraData = MainCam.GetUniversalAdditionalCameraData();
-        cameraData.cameraStack.Add(cam);
-        SceneManager.UnloadSceneAsync(UISCENE);
+            callBack?.Invoke();
+        });
     }
-
-
-
-
 }

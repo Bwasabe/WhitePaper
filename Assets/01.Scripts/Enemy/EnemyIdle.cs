@@ -17,7 +17,6 @@ public class EnemyIdle : EnemyState
     private EnemyChase _enemyChase;
     private void Start() {
         _enemy.SetState(ENEMY_STATE.IDLE,this);
-        _enemy.ChangeState(ENEMY_STATE.IDLE);
         _enemyChase = GetComponent<EnemyChase>();
     }
 

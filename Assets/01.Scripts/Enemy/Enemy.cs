@@ -21,6 +21,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Status _enemyStatus;
 
+    [SerializeField]
+    private ENEMY_STATE _firstEnterState;
+
+    private void Awake() {
+        EnemyManager.Instance.EnemyList.Add(this);
+    }
+    private IEnumerator Start() {
+        yield return null;
+        ChangeState(_firstEnterState);
+    }
     public void SetState(ENEMY_STATE enumState, EnemyState state)
     {
         _stateMachine[enumState] = state;

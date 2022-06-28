@@ -40,5 +40,12 @@ public class MoonAttack : BaseAttack
         yield return WaitForSeconds(_spearAttacks[_attackCount].length);
         _playerMove.PlayerState &= ~PlayerMove.PLAYERSTATE.ATTACK;
     }
+
+    protected override void OnTriggerEnter(Collider other) {
+        if(gameObject.layer.Equals(LayerMask.NameToLayer("Item")))return;
+        base.OnTriggerEnter(other);
+
+
+    }
     
 }
