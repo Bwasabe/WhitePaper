@@ -45,18 +45,18 @@ public class ShowOrHideBtn : MonoBehaviour
     {
         _button = GetComponent<Button>();
 
-        // switch (_buttonType)
-        // {
-        //     case BUTTONTYPE.SHOW:
-        //         _button.onClick.AddListener(OnClickShow);
-        //         break;
-        //     case BUTTONTYPE.HIDE:
-        //         _button.onClick.AddListener(OnClickHide);
-        //         break;
-        //     default:
-        //         Debug.LogError("버튼 타입이 잘못되었습니다");
-        //         break;
-        // }
+        switch (_buttonType)
+        {
+            case BUTTONTYPE.SHOW:
+                _button.onClick.AddListener(OnClickShow);
+                break;
+            case BUTTONTYPE.HIDE:
+                _button.onClick.AddListener(OnClickHide);
+                break;
+            default:
+                Debug.LogError("버튼 타입이 잘못되었습니다");
+                break;
+        }
     }
 
     protected virtual void OnClickShow()
