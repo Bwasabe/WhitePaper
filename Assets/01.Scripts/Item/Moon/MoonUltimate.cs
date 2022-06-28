@@ -29,8 +29,10 @@ public class MoonUltimate : BaseSkill
 
     private Transform _camTransform;
 
-
+    private Animator _animator;
     private Tweener _readyToUltimateTween;
+
+    private readonly int SPEARULTIMATE = Animator.StringToHash("SpearUltimate");
 
     private bool _isSkill = false;
 
@@ -38,6 +40,7 @@ public class MoonUltimate : BaseSkill
     {
         _camTransform = MainCam.transform;
         _playerMove = GameManager.Instance.PlayerMove;
+        _animator = GameManager.Instance.PlayerCtrl.Animator;
         _characterController = _playerMove.transform.GetComponent<CharacterController>();
 
         //계산을 위해 역수로 변환
@@ -47,7 +50,6 @@ public class MoonUltimate : BaseSkill
     public override void Skill()
     {
         //if(_readyToUltimateTween != null && _readyToUltimateTween.IsPlaying())return;
-        Debug.Log("잉ㅁㄴㅇ");
         if (!_isSkill)
         {
             _readyToUltimateTween = _light.DOIntensity(_lightIntencity, 1f).OnComplete(() =>
@@ -58,6 +60,7 @@ public class MoonUltimate : BaseSkill
             });
             return;
         }
+        _animator.Play(SPEARULTIMATE);
         _playerMove.IsNotGravity = true;
         _playerMove.RemoveGravity();
         StartCoroutine(DashAttack());

@@ -99,20 +99,20 @@ public class PlayerMove : MonoBehaviour
     //     Gizmos.DrawSphere(new Vector3(pos2.x,pos2.y + _characterController.radius, pos2.z), _characterController.radius);
     // }
 
-    private void OnGUI()
-    {
-        var labelStyle = new GUIStyle();
-        labelStyle.fontSize = 50;
-        labelStyle.normal.textColor = Color.red;
+    // private void OnGUI()
+    // {
+    //     var labelStyle = new GUIStyle();
+    //     labelStyle.fontSize = 50;
+    //     labelStyle.normal.textColor = Color.red;
 
-        GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
-        GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
-        GUILayout.Label($"플레이어 중력 : {_playerVelocity.y}", labelStyle);
+    //     GUILayout.Label($"땅에 닿았는가 : {_characterController.isGrounded}", labelStyle);
+    //     GUILayout.Label($"땅에 닿았는가 : {IsGround()}", labelStyle);
+    //     GUILayout.Label($"플레이어 중력 : {_playerVelocity.y}", labelStyle);
 
-        GUILayout.Label($"Pos1 : {transform.forward}", labelStyle);
-        GUILayout.Label($"Pos2 : {pos2}", labelStyle);
-        GUILayout.Label($"스테이트 : {PlayerState}", labelStyle);
-    }
+    //     GUILayout.Label($"Pos1 : {transform.forward}", labelStyle);
+    //     GUILayout.Label($"Pos2 : {pos2}", labelStyle);
+    //     GUILayout.Label($"스테이트 : {PlayerState}", labelStyle);
+    // }
 
 
     private void Jump()
