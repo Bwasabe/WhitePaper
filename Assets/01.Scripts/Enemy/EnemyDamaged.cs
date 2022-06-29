@@ -10,6 +10,8 @@ public class EnemyDamaged : CharacterDamaged
 
     [SerializeField]
     private Color _hitColor;
+    [SerializeField]
+    private GameObject _hitSound;
 
     private Enemy _enemy;
 
@@ -19,7 +21,8 @@ public class EnemyDamaged : CharacterDamaged
     public override void Damage(int damage)
     {
         base.Damage(damage);
-
+        GameObject g =Instantiate(_hitSound, transform);
+        g.SetActive(true);
         if(_hp >= 0){
             _renderer.material.DOColor(_hitColor, 0.3f).SetLoops(2, LoopType.Yoyo);
         }

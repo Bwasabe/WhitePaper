@@ -101,9 +101,10 @@ MonoBehaviour:
   _nameColor: {r: 0.56078434, g: 0, b: 1, a: 1}
   _skillName: "\uB2EC\uBE5B \uBCA0\uAE30(q)"
   _skillNameColor: {r: 0, g: 0.15686275, b: 1, a: 1}
-  _skillExplain: "\uD558\uB298\uC744 \uB2EC\uBE5B\uC73C\uB85C \uBC14\uAFC9\uB2C8\uB2E4.\n\uB2EC\uBE5B\uC73C\uB85C
-    \uBC14\uB010 \uD558\uB298 \uC544\uB798\n\uC801\uB4E4\uC744 \uBB34\uC790\uBE44\uD558\uAC8C
-    \uBCA0\uC5B4\uBC84\uB9BD\uB2C8\uB2E4"
+  _skillExplain: "Q\uB97C \uB204\uB97C \uC2DC 6\uCD08 \uB3D9\uC548 \uD65C\uC131\uD654
+    \uC0C1\uD0DC\uAC00 \uB418\uBA70, \uD65C\uC131\uD654 \uC0C1\uD0DC\uC5D0\uC11C
+    \uCD5C\uB300 3\uD68C, \uB3CC\uC9C4\uD558\uC5EC \uC801\uB4E4\uC744 \uACF5\uACA9\uD560
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   _itemStatus:
     _str: 10
     _agi: 8
@@ -144,6 +145,8 @@ MonoBehaviour:
   _lightIntencity: 1
   _oldLightIntencity: 5
   _attackDistance: 15
+  _skillDuration: 6
+  _skillColtime: 10
   _dashTime: 0.2
   _skillMaxCount: 3
 --- !u!114 &1113850112

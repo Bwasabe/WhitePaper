@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerDamaged : CharacterDamaged
 {
@@ -16,8 +17,7 @@ public class PlayerDamaged : CharacterDamaged
     [SerializeField]
     private Text _hpText;
 
-    [SerializeField]
-    private GameObject _deadObject;
+
     private void Start()
     {
         _volume.sharedProfile.TryGet<Vignette>(out _vigenette);
@@ -41,6 +41,6 @@ public class PlayerDamaged : CharacterDamaged
 
     protected override void Dead()
     {
-        _deadObject.SetActive(true);
+        SceneManager.LoadScene("YouWin");
     }
 }

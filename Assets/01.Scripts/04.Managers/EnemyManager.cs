@@ -1,7 +1,11 @@
+using static Yields;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
 
 public class EnemyManager : MonoSingleton<EnemyManager>
 {
@@ -15,17 +19,20 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     [SerializeField]
     private Text _infoText;
 
-    private void Start() {
+
+    private IEnumerator Start() {
+        yield return WaitUntil(() => QuestManager.Instance.CurrentQuest >= 1);
+        _infoText.text = "적들을 모두 처치하세요!";
         CheckEnemy();
     }
 
     public void CheckEnemy(){
-        _enemyText.text = $"{CurrentEnemyCount} / {EnemyList.Count}";
+        _enemyText.text = $"현재 잡은 마리수{Environment.NewLine}{CurrentEnemyCount} / {EnemyList.Count}";
 
         if(CurrentEnemyCount == EnemyList.Count){
             _enemyText.gameObject.SetActive(false);
 
-            _infoText.text = $"와 적들을 모두 죽였어요!";
+            SceneManager.LoadScene("YouLose");
         }
     }
 }

@@ -32,25 +32,20 @@ public class CameraMove : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxis("Mouse X");
-        float y = Input.GetAxis("Mouse Y");
-
-        _rotateX += x * _sencetive;
-        _rotateY += y * _sencetive;
-
-        _rotateY = Mathf.Clamp(_rotateY, _minRotate.y, _maxRotate.y);
-        //TODO: 나중에는 얼굴만 돌리다가 90도?단위 정도로 돌아갔을때만 몸 돌리는거로 바꿀 것
         if (!_playerMove.PlayerState.HasFlag(PlayerMove.PLAYERSTATE.ATTACK))
         {
+            float x = Input.GetAxis("Mouse X");
+            float y = Input.GetAxis("Mouse Y");
+
+            _rotateX += x * _sencetive;
+            _rotateY += y * _sencetive;
+
+            _rotateY = Mathf.Clamp(_rotateY, _minRotate.y, _maxRotate.y);
+            //TODO: 나중에는 얼굴만 돌리다가 90도?단위 정도로 돌아갔을때만 몸 돌리는거로 바꿀 것
             _player.rotation = Quaternion.Euler(0, _rotateX, 0f);
             transform.rotation = Quaternion.Euler(-_rotateY, _rotateX, 0f);
         }
-        
-        // _player.rotation = Quaternion.Euler(
-        //     Mathf.Clamp(-_rotateY, _minRotate.x, _maxRotate.x),
-        //     Mathf.Clamp( _rotateX, _minRotate.y, _maxRotate.y),
-        //     0f
-        // );
+
     }
 
     private void Setbody()

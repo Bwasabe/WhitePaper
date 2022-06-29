@@ -104,6 +104,7 @@ public class Inventory : MonoSingleton<Inventory>
             _playerHand.Find(_weaponGrid.Item.name).gameObject.SetActive(true);
 
             GameManager.Instance.PlayerCtrl.transform.position = GameManager.Instance.FirstEnterTransform.position;
+            QuestManager.Instance.CurrentQuest++;
         }
         else
         {
