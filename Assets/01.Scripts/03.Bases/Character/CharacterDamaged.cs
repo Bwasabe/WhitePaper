@@ -7,12 +7,16 @@ public abstract class CharacterDamaged : MonoBehaviour, IDamageable
     [SerializeField]
     protected int _hp;
 
+    protected bool _isDead;
+
     public virtual void Damage(int damage)
     {
+        if(_isDead)return;
         _hp -= damage;
 
         if (_hp <= 0)
         {
+            _isDead = true;
             Dead();
         }
     }

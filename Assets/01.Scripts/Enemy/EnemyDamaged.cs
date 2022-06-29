@@ -21,7 +21,7 @@ public class EnemyDamaged : CharacterDamaged
     public override void Damage(int damage)
     {
         base.Damage(damage);
-        GameObject g =Instantiate(_hitSound, transform);
+        GameObject g = Instantiate(_hitSound, transform);
         g.SetActive(true);
         if(_hp >= 0){
             _renderer.material.DOColor(_hitColor, 0.3f).SetLoops(2, LoopType.Yoyo);
@@ -32,4 +32,6 @@ public class EnemyDamaged : CharacterDamaged
     {
         _enemy.ChangeState(ENEMY_STATE.DEAD);
     }
+
+
 }

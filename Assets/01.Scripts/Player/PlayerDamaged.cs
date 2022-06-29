@@ -41,6 +41,7 @@ public class PlayerDamaged : CharacterDamaged
 
     protected override void Dead()
     {
-        SceneManager.LoadScene("YouWin");
+        KeyInterectionManager.Instance.SetCursorLock(false);
+        SceneManager.LoadScene("YouLose");
     }
 }
