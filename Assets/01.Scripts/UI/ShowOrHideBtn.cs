@@ -61,7 +61,7 @@ public class ShowOrHideBtn : MonoBehaviour
 
     protected virtual void OnClickShow()
     {
-
+        
         if (_hideTweener.IsActive())
         {
             _hideTweener.Kill();

@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 
 public class UISceneLoader : MonoSingleton<UISceneLoader>
 {
+    private static readonly string[] IGNORESCENES = {"UIScene", "StartScene"};
     private const string UISCENE = "UIScene";
     private const string CAMNAME = "UICam";
     static AsyncOperation _async = new AsyncOperation();
@@ -18,9 +19,18 @@ public class UISceneLoader : MonoSingleton<UISceneLoader>
     [RuntimeInitializeOnLoadMethod]
     private static void LoadingUIScene()
     {
-        if (SceneManager.GetActiveScene().name == UISCENE) return;
+        if(CheckIgnoreScene())return;
         _async = SceneManager.LoadSceneAsync(UISCENE, LoadSceneMode.Additive);
         StartAfterCor(Instance);
+    }
+
+    private static bool CheckIgnoreScene(){
+        for (int i = 0; i < IGNORESCENES.Length; ++i){
+            if(SceneManager.GetActiveScene().name.Equals(IGNORESCENES[i])){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void StartAfterCor(MonoBehaviour script)

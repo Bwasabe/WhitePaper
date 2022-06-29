@@ -18,6 +18,7 @@ public class ShowOrHideKeyInterection : ShowOrHideBtn
                 break;
 
         }
+        KeyInterectionManager.Instance.SetCursorLock(true);
     }
 
     protected override void OnClickShow()
@@ -25,6 +26,7 @@ public class ShowOrHideKeyInterection : ShowOrHideBtn
         if (!_isShow)
         {
             _isShow = true;
+            KeyInterectionManager.Instance.SetCursorLock(false);
             base.OnClickShow();
         }
     }
@@ -34,6 +36,7 @@ public class ShowOrHideKeyInterection : ShowOrHideBtn
         if (_isShow)
         {
             _isShow = false;
+            KeyInterectionManager.Instance.SetCursorLock(true);
             base.OnClickHide();
 
         }
